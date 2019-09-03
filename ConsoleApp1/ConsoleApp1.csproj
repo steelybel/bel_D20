@@ -26,6 +26,9 @@
     <None Update="Resources\Sprites\roguelikeIndoor_transparent.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Sprites\roguelikeSheet_transparent.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
 </Project>
