@@ -10,6 +10,7 @@ namespace bel_D20
     {
         public Race pcRace;
         public Class pcClass;
+        public string name = "fgsfds";
         //public int skinColor;
         public int[] stats = new int[6];
         int[] finStats = new int[6];
@@ -259,6 +260,7 @@ namespace bel_D20
     {
         public Premade1()
         {
+            name = "Beluwyn";
             pcRace = new Elf_f(0);
             pcClass = new Wizard();
         }
@@ -267,6 +269,7 @@ namespace bel_D20
     {
         public Premade2()
         {
+            name = "Jeremiah";
             pcRace = new Human_m(2);
             pcClass = new Cleric();
         }
@@ -275,6 +278,7 @@ namespace bel_D20
     {
         public Premade3()
         {
+            name = "Audhild";
             pcRace = new Dwarf_f(1);
             pcClass = new Fighter();
         }
@@ -283,6 +287,7 @@ namespace bel_D20
     {
         public Premade4()
         {
+            name = "Merric";
             pcRace = new Hobbit_m(0);
             pcClass = new Rogue();
         }
