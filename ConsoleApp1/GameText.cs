@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.IO;
 using Raylib;
 using rl = Raylib.Raylib;
 
@@ -8,6 +9,7 @@ namespace bel_D20
 {
     class GameText
     {
+        public static StreamWriter txtLog = new StreamWriter(@"Data/textLog.txt");
         public static Vector2 textLoc1 = new Vector2();
         public static Vector2 textLoc2 = new Vector2();
         public static Vector2 textLoc3 = new Vector2();
@@ -20,6 +22,7 @@ namespace bel_D20
             textLatest3 = textLatest2;
             textLatest2 = textLatest1;
             textLatest1 = txt;
+            txtLog.WriteLine(txt);
         }
 
         public static string HeroAtk(string chrName, string enemyName, int dmg)

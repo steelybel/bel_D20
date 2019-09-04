@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.IO;
 using System.Threading.Tasks;
 using Raylib;
 using rl = Raylib.Raylib;
@@ -10,6 +11,7 @@ namespace bel_D20
 {
     static class Program
     {
+        static bool canAct = true;
         public static Dice dice = new Dice();
         public static bool looping = true;
         public static int Main()
@@ -47,12 +49,15 @@ namespace bel_D20
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                
+
                 //string textStr = "Congrats! You rolled a " + dice.d20(1) + "\n"
                 //+ GameText.HeroAtk("Jon","Goblin",dice.d8(1));
-                if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
-                {
-                    GameText.SpitOut(GameText.HeroAtk("Jon", "Goblin", dice.d8(1)));
+                if (canAct)
+                { 
+                    if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
+                    {
+                        GameText.SpitOut(GameText.HeroAtk("Jon", "Goblin", dice.d8(1)));
+                    }
                 }
                 GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).x / 2), 48);
                 GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).x / 2), 24);
