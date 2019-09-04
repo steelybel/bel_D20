@@ -16,62 +16,31 @@ namespace bel_D20
         {
             // Initialization
             //--------------------------------------------------------------------------------------
-            int screenWidth = 800;
+            int screenWidth = 400;
             int screenHeight = 450;
-            rl.InitWindow(screenWidth, screenHeight, "raylib [core] example - basic window");
+            rl.InitWindow(screenWidth, screenHeight, "Dungeons!");
             rl.SetTargetFPS(60);
             Texture2D hero = rl.LoadTexture("Resources/Sprites/roguelikeChar_transparent.png");
-            Rectangle tile = new Rectangle(0, 0, 16, 16);
-            Rectangle skin1 = new Rectangle(0, 0, 16, 16);
-            Rectangle skin1f = new Rectangle(17, 0, 16, 16);
-            Rectangle skin2 = new Rectangle(0, 17, 16, 16);
-            Rectangle skin2f = new Rectangle(17, 17, 16, 16);
-            Rectangle skin3 = new Rectangle(0, 34, 16, 16);
-            Rectangle skin3f = new Rectangle(17, 34, 16, 16);
-            Rectangle skin4 = new Rectangle(0, 51, 16, 16);
-            Rectangle skin4f = new Rectangle(17, 51, 16, 16);
-            Rectangle hairElf = new Rectangle(358, 85, 16, 16);
-            Rectangle shirt1 = new Rectangle(103, 0, 16, 16);
-            Rectangle TopElf = new Rectangle(120, 119, 16, 16);
-            Rectangle TopWiz = new Rectangle(256, 119, 16, 16);
-            Rectangle mTopBarb = new Rectangle(103, 17, 16, 16);
-            Rectangle fTopBarb = new Rectangle(120, 17, 16, 16);
-            Rectangle hatWiz = new Rectangle(494, 136, 16, 16);
-            Rectangle pants1 = new Rectangle(52, 0, 16, 16);
-            Rectangle pants2 = new Rectangle(52, 17, 16, 16);
-            Rectangle pants3 = new Rectangle(52, 34, 16, 16);
-            Rectangle pants4 = new Rectangle(52, 51, 16, 16);
-            Rectangle pants5 = new Rectangle(52, 85, 16, 16);
-            Rectangle pants6 = new Rectangle(52, 102, 16, 16);
-            Rectangle pants7 = new Rectangle(52, 119, 16, 16);
-            Rectangle pants8 = new Rectangle(52, 136, 16, 16);
-            Rectangle shoe1 = new Rectangle(69, 0, 16, 16);
-            Rectangle shoe2 = new Rectangle(69, 17, 16, 16);
-            Rectangle shoe3 = new Rectangle(69, 34, 16, 16);
-            Rectangle shoe4 = new Rectangle(69, 51, 16, 16);
-            Rectangle shoe5 = new Rectangle(69, 85, 16, 16);
-            Rectangle shoe6 = new Rectangle(69, 102, 16, 16);
-            Rectangle shoe7 = new Rectangle(69, 119, 16, 16);
-            Rectangle shoe8 = new Rectangle(69, 136, 16, 16);
-            Rectangle sword1 = new Rectangle(749, 102, 16, 16);
-            Rectangle knife1 = new Rectangle(749, 119, 16, 16);
-            Rectangle staff1 = new Rectangle(715, 17, 16, 16);
-            Rectangle axe1 = new Rectangle(800, 17, 16, 16);
-            Vector2 hero1Pos = new Vector2(352, 300);
-            Vector2 hero2Pos = new Vector2(384, 300);
-            Vector2 hero3Pos = new Vector2(416, 300);
-            Vector2 hero4Pos = new Vector2(448, 300);
+            Vector2 hero1Pos = new Vector2((screenWidth / 2) - 48, 300);
+            Vector2 hero2Pos = new Vector2((screenWidth / 2) - 16, 300);
+            Vector2 hero3Pos = new Vector2((screenWidth / 2) + 16, 300);
+            Vector2 hero4Pos = new Vector2((screenWidth / 2) + 48, 300);
 
             
             
 
             Player hero1 = new Player();
-
+            hero1.pcClass = new Paladin();
+            hero1.pcRace = new Human_m(2);
             Player hero2 = new Player();
-
+            hero2.pcClass = new Wizard();
+            hero2.pcRace = new Elf_f(0);
             Player hero3 = new Player();
-
+            hero3.pcClass = new Barbarian();
+            hero3.pcRace = new Dwarf_f(1);
             Player hero4 = new Player();
+            hero4.pcClass = new Rogue();
+            hero4.pcRace = new Elf_m(0);
             //--------------------------------------------------------------------------------------
 
             // Main game loop

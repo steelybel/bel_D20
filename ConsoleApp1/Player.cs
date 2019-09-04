@@ -10,7 +10,7 @@ namespace bel_D20
     {
         public Race pcRace;
         public Class pcClass;
-        public int skinColor;
+        //public int skinColor;
         public int[] stats = new int[6];
         int[] finStats = new int[6];
         int pStr;
@@ -41,12 +41,42 @@ namespace bel_D20
                 return pcRace.hair2;
             }
         }
-        public Rectangle hat;
-        public Rectangle top;
-        public Rectangle bottom;
-        public Rectangle shoe;
+        Rectangle hat
+        {
+            get
+            {
+                return pcClass.hat;
+            }
+        }
+        Rectangle top
+        {
+            get
+            {
+                return pcClass.top;
+            }
+        }
+        Rectangle bottom
+        {
+            get
+            {
+                return pcClass.bottom;
+            }
+        }
+        Rectangle shoe
+        {
+            get
+            {
+                return pcClass.shoe;
+            }
+        }
         public Rectangle shield;
-        public Rectangle wep;
+        Rectangle wep
+        {
+            get
+            {
+                return pcClass.wep[wepLevel];
+            }
+        }
         public void Draw(Texture2D spr, Vector2 pos)
         {
             Vector2 posf = new Vector2(pos.x - 8, pos.y - 8);
@@ -71,36 +101,62 @@ namespace bel_D20
         public int[] skillMod = new int[6];
     }
     //RACES
+    class Human_m : Race
+    {
+        public Human_m(int skinColor)
+        {
+            if (skinColor == 0) skin = Sprites.skin1; hair = new Rectangle(324, 0, 16, 16);
+            if (skinColor == 1) skin = Sprites.skin2; hair = new Rectangle(392, 68, 16, 16);
+            if (skinColor == 2) skin = Sprites.skin3; hair = new Rectangle(392, 68, 16, 16);
+        }
+    }
+    class Human_f : Race
+    {
+        public Human_f(int skinColor)
+        {
+            if (skinColor == 0) skin = Sprites.skin1f; hair = new Rectangle(341, 0, 16, 16);
+            if (skinColor == 1) skin = Sprites.skin2f; hair = new Rectangle(409, 68, 16, 16);
+            if (skinColor == 2) skin = Sprites.skin3f; hair = new Rectangle(443, 85, 16, 16);
+        }
+    }
     class Elf_m : Race
     {
-        public Elf_m()
+        public Elf_m(int skinColor)
         {
-            skin = new Rectangle(0, 0, 16, 16);
+            if (skinColor == 0) skin = Sprites.skin1;
+            if (skinColor == 1) skin = Sprites.skin2;
+            if (skinColor == 2) skin = Sprites.skin3;
             hair = new Rectangle(358, 85, 16, 16);
         }
     }
     class Elf_f : Race
     {
-        public Elf_f()
+        public Elf_f(int skinColor)
         {
-            skin = new Rectangle(17, 0, 16, 16);
+            if (skinColor == 0) skin = Sprites.skin1f;
+            if (skinColor == 1) skin = Sprites.skin2f;
+            if (skinColor == 2) skin = Sprites.skin3f;
             hair = new Rectangle(358, 85, 16, 16);
         }
     }
     class Dwarf_m : Race
     {
-        public Dwarf_m()
+        public Dwarf_m(int skinColor)
         {
-            skin = new Rectangle(0, 0, 16, 16);
+            if (skinColor == 0) skin = Sprites.skin1;
+            if (skinColor == 1) skin = Sprites.skin2;
+            if (skinColor == 2) skin = Sprites.skin3;
             hair = new Rectangle(443, 17, 16, 16);
             hair2 = new Rectangle(426, 51, 16, 16);
         }
     }
     class Dwarf_f : Race
     {
-        public Dwarf_f()
+        public Dwarf_f(int skinColor)
         {
-            skin = new Rectangle(17, 0, 16, 16);
+            if (skinColor == 0) skin = Sprites.skin1f;
+            if (skinColor == 1) skin = Sprites.skin2f;
+            if (skinColor == 2) skin = Sprites.skin3f;
             hair = new Rectangle(443, 17, 16, 16);
             hair2 = new Rectangle(426, 51, 16, 16);
         }
@@ -114,16 +170,48 @@ namespace bel_D20
         public Rectangle bottom;
         public Rectangle shoe;
         public Rectangle shield;
-        public Rectangle wep;
+        public Rectangle[] wep = new Rectangle[5];
         //stats
+    }
+    class Barbarian : Class
+    {
+        public Barbarian()
+        {
+            top = Sprites.topBrb;
+            bottom = Sprites.pants1;
+            shoe = Sprites.shoe2;
+            //wep = new Rectangle[](715, 17, 16, 16);
+        }
+    }
+    class Paladin : Class
+    {
+        public Paladin()
+        {
+            top = Sprites.topPal;
+            bottom = Sprites.pants1;
+            shoe = Sprites.shoe3;
+            //wep = new Rectangle[](715, 17, 16, 16);
+        }
+    }
+    class Rogue : Class
+    {
+        public Rogue()
+        {
+            top = Sprites.topRog;
+            bottom = Sprites.pants1;
+            shoe = Sprites.shoe1;
+            //wep = new Rectangle[](715, 17, 16, 16);
+        }
     }
     class Wizard : Class
     {
         public Wizard()
         {
             hat = new Rectangle(494, 136, 16, 16);
-            top = new Rectangle(256, 119, 16, 16);
-            wep = new Rectangle(715, 17, 16, 16);
+            top = Sprites.topWiz;
+            bottom = new Rectangle(52, 34, 16, 16);
+            shoe = new Rectangle(69, 0, 16, 16);
+            //wep = new Rectangle[](715, 17, 16, 16);
         }
     }
     //premade chars
@@ -131,8 +219,16 @@ namespace bel_D20
     {
         public Premade1()
         {
-            pcRace = new Elf_f();
+            pcRace = new Elf_f(0);
             pcClass = new Wizard();
+        }
+    }
+    class Premade2 : Player
+    {
+        public Premade2()
+        {
+            pcRace = new Human_m(2);
+            pcClass = new Paladin();
         }
     }
 }
