@@ -250,7 +250,7 @@ namespace bel_D20
             hat = Sprites.hatWiz;
             top = Sprites.topWiz;
             bottom = new Rectangle(52, 34, 16, 16);
-            shoe = new Rectangle(69, 0, 16, 16);
+            //shoe = new Rectangle(69, 0, 16, 16);
             wepf = Sprites.staff;
         }
     }

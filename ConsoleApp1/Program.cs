@@ -47,15 +47,16 @@ namespace bel_D20
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).x / 2), 48);
-                GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).x / 2), 24);
-                GameText.textLoc3 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 0f).x / 2), 0);
+                
                 //string textStr = "Congrats! You rolled a " + dice.d20(1) + "\n"
                 //+ GameText.HeroAtk("Jon","Goblin",dice.d8(1));
                 if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
                 {
                     GameText.SpitOut(GameText.HeroAtk("Jon", "Goblin", dice.d8(1)));
                 }
+                GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).x / 2), 48);
+                GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).x / 2), 24);
+                GameText.textLoc3 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 0f).x / 2), 0);
                 //whereText = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, textStr, textScl, 0f).x / 2), 48);
                 //----------------------------------------------------------------------------------
 
