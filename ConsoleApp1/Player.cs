@@ -69,12 +69,18 @@ namespace bel_D20
                 return pcClass.shoe;
             }
         }
-        public Rectangle shield;
+        Rectangle shield
+        {
+            get
+            {
+                return pcClass.shield;
+            }
+        }
         Rectangle wep
         {
             get
             {
-                return pcClass.wep[wepLevel];
+                return pcClass.wepf[wepLevel];
             }
         }
         public void Draw(Texture2D spr, Vector2 pos)
@@ -161,6 +167,26 @@ namespace bel_D20
             hair2 = new Rectangle(426, 51, 16, 16);
         }
     }
+    class Hobbit_m : Race
+    {
+        public Hobbit_m(int skinColor)
+        {
+            if (skinColor == 0) skin = Sprites.skin1; hair = new Rectangle(426, 34, 16, 16);
+            if (skinColor == 1) skin = Sprites.skin2; hair = new Rectangle(358, 34, 16, 16);
+            if (skinColor == 2) skin = Sprites.skin3; hair = new Rectangle(426, 102, 16, 16);
+
+        }
+    }
+    class Hobbit_f : Race
+    {
+        public Hobbit_f(int skinColor)
+        {
+            if (skinColor == 0) skin = Sprites.skin1f; hair = new Rectangle(409, 0, 16, 16);
+            if (skinColor == 1) skin = Sprites.skin2f; hair = new Rectangle(341, 0, 16, 16);
+            if (skinColor == 2) skin = Sprites.skin3f; hair = new Rectangle(409, 102, 16, 16);
+
+        }
+    }
     //CLASSES
     class Class
     {
@@ -170,7 +196,7 @@ namespace bel_D20
         public Rectangle bottom;
         public Rectangle shoe;
         public Rectangle shield;
-        public Rectangle[] wep = new Rectangle[5];
+        public List<Rectangle> wepf;// = new List<Rectangle>();
         //stats
     }
     class Barbarian : Class
@@ -180,17 +206,20 @@ namespace bel_D20
             top = Sprites.topBrb;
             bottom = Sprites.pants1;
             shoe = Sprites.shoe2;
-            //wep = new Rectangle[](715, 17, 16, 16);
+            wepf = Sprites.axe;
         }
     }
-    class Paladin : Class
+    class Cleric : Class
     {
-        public Paladin()
+        public Cleric()
         {
+            hat = Sprites.hatClr;
             top = Sprites.topPal;
             bottom = Sprites.pants1;
             shoe = Sprites.shoe3;
-            //wep = new Rectangle[](715, 17, 16, 16);
+            shield = Sprites.shield1;
+            wepf = Sprites.mace;
+            
         }
     }
     class Rogue : Class
@@ -200,18 +229,29 @@ namespace bel_D20
             top = Sprites.topRog;
             bottom = Sprites.pants1;
             shoe = Sprites.shoe1;
-            //wep = new Rectangle[](715, 17, 16, 16);
+            wepf = Sprites.knife;
+        }
+    }
+    class Fighter : Class
+    {
+        public Fighter()
+        {
+            //hat = Sprites.hatWar;
+            top = Sprites.topWar;
+            bottom = Sprites.pants4;
+            shoe = Sprites.shoe1;
+            wepf = Sprites.sword;
         }
     }
     class Wizard : Class
     {
         public Wizard()
         {
-            hat = new Rectangle(494, 136, 16, 16);
+            hat = Sprites.hatWiz;
             top = Sprites.topWiz;
             bottom = new Rectangle(52, 34, 16, 16);
             shoe = new Rectangle(69, 0, 16, 16);
-            //wep = new Rectangle[](715, 17, 16, 16);
+            wepf = Sprites.staff;
         }
     }
     //premade chars
@@ -228,7 +268,23 @@ namespace bel_D20
         public Premade2()
         {
             pcRace = new Human_m(2);
-            pcClass = new Paladin();
+            pcClass = new Cleric();
+        }
+    }
+    class Premade3 : Player
+    {
+        public Premade3()
+        {
+            pcRace = new Dwarf_f(1);
+            pcClass = new Fighter();
+        }
+    }
+    class Premade4 : Player
+    {
+        public Premade4()
+        {
+            pcRace = new Hobbit_m(0);
+            pcClass = new Rogue();
         }
     }
 }

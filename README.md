@@ -14,8 +14,8 @@ Adjustments may be needed for other platforms.
 
 Asset Credits:
 [kenney]:https://www.kenney.nl/  - character sprites, environment tiles, UI, audio
-[pix3m]:https://www.deviantart.com/pix3m - pixel fonts
 
+Check out Raylib here:
 [raylib]:https://github.com/raysan5/raylib
 [raysan]:https://github.com/raysan5
 

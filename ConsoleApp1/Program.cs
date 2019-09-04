@@ -20,29 +20,26 @@ namespace bel_D20
             int screenHeight = 450;
             rl.InitWindow(screenWidth, screenHeight, "Dungeons!");
             rl.SetTargetFPS(60);
-            Font smallFont = rl.LoadFont("Resources/Fonts/_bitmap_font____romulus_by_pix3m-d6aokem.ttf");
-            Font bigFont = rl.LoadFont("Resources/Fonts/alagard_by_pix3m-d6awiwp.ttf");
+            Font smallFont = rl.LoadFont("Resources/Fonts/romulus.png");
+            Font bigFont = rl.LoadFont("Resources/Fonts/alagard.png");//rl.LoadFont("Resources/Fonts/alagard_by_pix3m-d6awiwp.ttf");
             Texture2D hero = rl.LoadTexture("Resources/Sprites/roguelikeChar_transparent.png");
+            Texture2D uiTanInlay = rl.LoadTexture("Resources/UI/Ancient/tan_inlay.png");
+            
             Vector2 hero1Pos = new Vector2((screenWidth / 2) - 48, 300);
             Vector2 hero2Pos = new Vector2((screenWidth / 2) - 16, 300);
             Vector2 hero3Pos = new Vector2((screenWidth / 2) + 16, 300);
             Vector2 hero4Pos = new Vector2((screenWidth / 2) + 48, 300);
-            Rectangle mainText = new Rectangle(200, 24, 400, 96);
+            Rectangle mainText = new Rectangle(400, 24, 400, 96);
+            Vector2 textPlace = new Vector2((screenWidth / 2), 48);
+            Font curFont = bigFont;
+            int textScl = curFont.baseSize;
             
             
 
-            Player hero1 = new Player();
-            hero1.pcClass = new Paladin();
-            hero1.pcRace = new Human_m(2);
-            Player hero2 = new Player();
-            hero2.pcClass = new Wizard();
-            hero2.pcRace = new Elf_f(0);
-            Player hero3 = new Player();
-            hero3.pcClass = new Barbarian();
-            hero3.pcRace = new Dwarf_f(1);
-            Player hero4 = new Player();
-            hero4.pcClass = new Rogue();
-            hero4.pcRace = new Elf_m(0);
+            Player hero1 = new Premade1();
+            Player hero2 = new Premade2();
+            Player hero3 = new Premade3();
+            Player hero4 = new Premade4();
             //--------------------------------------------------------------------------------------
 
             // Main game loop
@@ -50,7 +47,16 @@ namespace bel_D20
             {
                 // Update
                 //----------------------------------------------------------------------------------
-                // TODO: Update your variables here
+                GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).x / 2), 48);
+                GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).x / 2), 24);
+                GameText.textLoc3 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 0f).x / 2), 0);
+                //string textStr = "Congrats! You rolled a " + dice.d20(1) + "\n"
+                //+ GameText.HeroAtk("Jon","Goblin",dice.d8(1));
+                if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
+                {
+                    GameText.SpitOut(GameText.HeroAtk("Jon", "Goblin", dice.d8(1)));
+                }
+                //whereText = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, textStr, textScl, 0f).x / 2), 48);
                 //----------------------------------------------------------------------------------
 
                 // Draw
@@ -58,8 +64,10 @@ namespace bel_D20
                 rl.BeginDrawing();
 
                 rl.ClearBackground(Color.RAYWHITE);
+                rl.DrawTextEx(curFont, GameText.textLatest3, GameText.textLoc3, textScl, 0, Color.GRAY);
+                rl.DrawTextEx(curFont, GameText.textLatest2, GameText.textLoc2, textScl, 0, Color.DARKGRAY);
+                rl.DrawTextEx(curFont, GameText.textLatest1, GameText.textLoc1, textScl, 0, Color.BLACK);
 
-                rl.DrawTextRec(bigFont,"Congrats! You rolled a " + dice.d20(1), mainText, 20, 0, true, Color.LIGHTGRAY);
                 hero1.Draw(hero, hero1Pos);
                 hero2.Draw(hero, hero2Pos);
                 hero3.Draw(hero, hero3Pos);
