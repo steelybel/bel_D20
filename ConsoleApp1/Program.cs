@@ -20,12 +20,14 @@ namespace bel_D20
             int screenHeight = 450;
             rl.InitWindow(screenWidth, screenHeight, "Dungeons!");
             rl.SetTargetFPS(60);
+            Font smallFont = rl.LoadFont("Resources/Fonts/_bitmap_font____romulus_by_pix3m-d6aokem.ttf");
+            Font bigFont = rl.LoadFont("Resources/Fonts/alagard_by_pix3m-d6awiwp.ttf");
             Texture2D hero = rl.LoadTexture("Resources/Sprites/roguelikeChar_transparent.png");
             Vector2 hero1Pos = new Vector2((screenWidth / 2) - 48, 300);
             Vector2 hero2Pos = new Vector2((screenWidth / 2) - 16, 300);
             Vector2 hero3Pos = new Vector2((screenWidth / 2) + 16, 300);
             Vector2 hero4Pos = new Vector2((screenWidth / 2) + 48, 300);
-
+            Rectangle mainText = new Rectangle(200, 24, 400, 96);
             
             
 
@@ -57,7 +59,7 @@ namespace bel_D20
 
                 rl.ClearBackground(Color.RAYWHITE);
 
-                rl.DrawText("Congrats! You rolled a " + dice.d20(1), 190, 200, 20, Color.LIGHTGRAY);
+                rl.DrawTextRec(bigFont,"Congrats! You rolled a " + dice.d20(1), mainText, 20, 0, true, Color.LIGHTGRAY);
                 hero1.Draw(hero, hero1Pos);
                 hero2.Draw(hero, hero2Pos);
                 hero3.Draw(hero, hero3Pos);

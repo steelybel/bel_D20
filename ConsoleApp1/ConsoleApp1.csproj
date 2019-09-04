@@ -17,6 +17,12 @@
     <None Update="raylib.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Fonts\alagard_by_pix3m-d6awiwp.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Fonts\_bitmap_font____romulus_by_pix3m-d6aokem.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Sprites\roguelikeChar_transparent.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
