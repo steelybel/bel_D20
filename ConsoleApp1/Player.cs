@@ -126,7 +126,7 @@ namespace bel_D20
             if (skinColor == 0) skin = Sprites.skin1;
             if (skinColor == 1) skin = Sprites.skin2;
             if (skinColor == 2) skin = Sprites.skin3;
-            hair = new Rectangle(358, 85, 16, 16);
+            hair = new Rectangle(341, 68, 16, 16);
         }
     }
     class Elf_f : Race

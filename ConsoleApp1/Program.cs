@@ -16,7 +16,7 @@ namespace bel_D20
         {
             // Initialization
             //--------------------------------------------------------------------------------------
-            int screenWidth = 400;
+            int screenWidth = 800;
             int screenHeight = 450;
             rl.InitWindow(screenWidth, screenHeight, "Dungeons!");
             rl.SetTargetFPS(60);
