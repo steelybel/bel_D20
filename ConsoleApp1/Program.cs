@@ -32,6 +32,8 @@ namespace bel_D20
             bool market = false;
             int day = 0;
             int gold = 0;
+            int fights = 0;
+            int maxFights = 0;
             Vector2 hero1Pos = new Vector2((screenWidth / 2) - 48, 300);
             Vector2 hero2Pos = new Vector2((screenWidth / 2) - 16, 300);
             Vector2 hero3Pos = new Vector2((screenWidth / 2) + 16, 300);
@@ -99,6 +101,7 @@ namespace bel_D20
                 new Premade4()
             };
             Monster[] monsters = new Monster[4];
+            fights = 0;
             for (int h = 0; h < 4; h++)
             {
                 party[h].StatInit();
@@ -123,6 +126,7 @@ namespace bel_D20
                 {
                     if (Array.TrueForAll(monsters,element => element.hitPoints <= 0))
                     {
+                        fights = 0;
                         NewEncounter(monsters, monsterList, monsterPos);
                     }
                     else
@@ -157,10 +161,10 @@ namespace bel_D20
                     }
 
                 }
-                GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).x / 2), 64);
-                GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y);
-                GameText.textLoc3 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 0f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y - rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).y);
-                GameText.textLoc4 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest4, textScl, 0f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y - rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).y - rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 0f).y);
+                GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 1f).x / 2), 64);
+                GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 1f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y);
+                GameText.textLoc3 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 1f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y - rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).y);
+                GameText.textLoc4 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest4, textScl, 1f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y - rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).y - rl.MeasureTextEx(curFont, GameText.textLatest3, textScl, 0f).y);
                 //whereText = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, textStr, textScl, 0f).x / 2), 48);
                 //----------------------------------------------------------------------------------
 
@@ -170,10 +174,10 @@ namespace bel_D20
 
                 rl.ClearBackground(Color.RAYWHITE);
                 rl.DrawTextureNPatch(UI.uiTan, UI.uiText, mainText, Vector2.Zero, 0f, Color.WHITE);
-                rl.DrawTextEx(curFont, GameText.textLatest4, GameText.textLoc4, textScl, 0, rl.Fade(Color.BLACK, 0.25f));
-                rl.DrawTextEx(curFont, GameText.textLatest3, GameText.textLoc3, textScl, 0, rl.Fade(Color.BLACK, 0.5f));
-                rl.DrawTextEx(curFont, GameText.textLatest2, GameText.textLoc2, textScl, 0, rl.Fade(Color.BLACK, 0.75f));
-                rl.DrawTextEx(curFont, GameText.textLatest1, GameText.textLoc1, textScl, 0, Color.BLACK);
+                rl.DrawTextEx(curFont, GameText.textLatest4, GameText.textLoc4, textScl, 1, rl.Fade(Color.BLACK, 0.25f));
+                rl.DrawTextEx(curFont, GameText.textLatest3, GameText.textLoc3, textScl, 1, rl.Fade(Color.BLACK, 0.5f));
+                rl.DrawTextEx(curFont, GameText.textLatest2, GameText.textLoc2, textScl, 1, rl.Fade(Color.BLACK, 0.75f));
+                rl.DrawTextEx(curFont, GameText.textLatest1, GameText.textLoc1, textScl, 1, Color.BLACK);
                 
 
                 for (int h = 0; h < 4; h++)
@@ -193,6 +197,7 @@ namespace bel_D20
 
             // De-Initialization
             //--------------------------------------------------------------------------------------
+            GameText.txtLog.Close();
             rl.CloseWindow();        // Close window and OpenGL context
                                      //--------------------------------------------------------------------------------------
 

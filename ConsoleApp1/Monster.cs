@@ -12,6 +12,7 @@ namespace bel_D20
         public string name;
         public Rectangle sprite;
         public Color color;
+        public Color dColor;
         public int maxHP;
         public int hitPoints;
         public int AC;
@@ -26,7 +27,8 @@ namespace bel_D20
         {
             mouseArea = new Rectangle(pos.x-16, pos.y-16, 32, 32);
             hitPoints = maxHP;
-            GameText.SpitOut(GameText.EnemyEntry(name));
+            color = dColor;
+            if (name != null)GameText.SpitOut(GameText.EnemyEntry(name));
         }
         public void Draw(Vector2 pos)
         {
@@ -61,7 +63,7 @@ namespace bel_D20
         {
             name = "Goblin";
             sprite = Sprites.gobby;
-            color = Color.LIME;//new Color(154,255,84,255);
+            dColor = Color.LIME;//new Color(154,255,84,255);
             maxHP = 7;
             AC = 15;
             plusHit = 4;
@@ -75,7 +77,7 @@ namespace bel_D20
         {
             name = "Hobgoblin Warrior";
             sprite = Sprites.hob1;
-            color = Color.ORANGE;
+            dColor = Color.ORANGE;
             maxHP = 11;
             AC = 18;
             plusHit = 3;
@@ -89,7 +91,7 @@ namespace bel_D20
         {
             name = "Hobgoblin Amazon";
             sprite = Sprites.hob2;
-            color = Color.ORANGE;
+            dColor = Color.ORANGE;
             maxHP = 11;
             AC = 18;
             plusHit = 3;
@@ -103,11 +105,25 @@ namespace bel_D20
         {
             name = "Orc Marauder";
             sprite = Sprites.orc;
-            color = new Color(235, 236, 128, 255);
+            dColor = new Color(235, 236, 128, 255);
             maxHP = 15;
             AC = 13;
             plusHit = 5;
             atkDmg = (Dice.d12(1) + 3);
+            hitFX = new Slash();
+        }
+    }
+    class Gnoll : Monster
+    {
+        public Gnoll()
+        {
+            name = "Gnoll Barbarian";
+            sprite = Sprites.barb;
+            dColor = new Color(236, 211, 52, 255);
+            maxHP = 22;
+            AC = 15;
+            plusHit = 4;
+            atkDmg = (Dice.d8(1) + 2);
             hitFX = new Slash();
         }
     }
@@ -117,11 +133,11 @@ namespace bel_D20
         {
             name = "Drow Archer";
             sprite = Sprites.drow;
-            color = Color.DARKGRAY;
-            maxHP = 15;
-            AC = 13;
-            plusHit = 5;
-            atkDmg = (Dice.d12(1) + 3);
+            dColor = Color.DARKGRAY;
+            maxHP = 13;
+            AC = 15;
+            plusHit = 4;
+            atkDmg = (Dice.d6(1) + 2);
             hitFX = new Pierce();
         }
     }
@@ -132,7 +148,7 @@ namespace bel_D20
         {
             name = "Shambling Corpse";
             sprite = Sprites.zom;
-            color = Color.BEIGE;
+            dColor = Color.BEIGE;
             maxHP = 22;
             AC = 8;
             plusHit = 3;
@@ -146,7 +162,7 @@ namespace bel_D20
         {
             name = "Skeleton";
             sprite = Sprites.bones;
-            color = Color.RAYWHITE;
+            dColor = Color.RAYWHITE;
             maxHP = 13;
             AC = 13;
             plusHit = 4;
@@ -160,7 +176,7 @@ namespace bel_D20
         {
             name = "Vampire";
             sprite = Sprites.drac;
-            color = new Color(213, 191, 255,255);
+            dColor = new Color(213, 191, 255,255);
             maxHP = 82;
             AC = 15;
             plusHit = 6;
@@ -174,7 +190,7 @@ namespace bel_D20
         {
             name = "Ghost";
             sprite = Sprites.boo;
-            color = Color.SKYBLUE;
+            dColor = Color.SKYBLUE;
             maxHP = 45;
             AC = 11;
             plusHit = 5;
@@ -188,7 +204,7 @@ namespace bel_D20
         {
             name = "Mummy";
             sprite = Sprites.mummy;
-            color = Color.BEIGE;
+            dColor = Color.BEIGE;
             maxHP = 58;
             AC = 11;
             plusHit = 5;
@@ -203,7 +219,7 @@ namespace bel_D20
         {
             name = "Wolf";
             sprite = Sprites.wolf;
-            color = Color.LIGHTGRAY;
+            dColor = Color.LIGHTGRAY;
             maxHP = 31;
             AC = 13;
             plusHit = 4;
@@ -217,7 +233,7 @@ namespace bel_D20
         {
             name = "Boar";
             sprite = Sprites.boar;
-            color = Color.BEIGE;
+            dColor = Color.BEIGE;
             maxHP = 11;
             AC = 11;
             plusHit = 3;
@@ -231,7 +247,7 @@ namespace bel_D20
         {
             name = "Black Bear";
             sprite = Sprites.bear;
-            color = Color.GRAY;
+            dColor = Color.GRAY;
             maxHP = 19;
             AC = 11;
             plusHit = 3;
@@ -246,7 +262,7 @@ namespace bel_D20
         {
             name = "Ultra-Lich";
             sprite = Sprites.hob2;
-            color = Color.RAYWHITE;
+            dColor = Color.RAYWHITE;
             maxHP = 11;
             AC = 18;
             plusHit = 3;

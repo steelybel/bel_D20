@@ -9,7 +9,7 @@ namespace bel_D20
 {
     class GameText
     {
-        public static StreamWriter txtLog = new StreamWriter("Data/textLog.txt");
+        public static StreamWriter txtLog = new StreamWriter("textLog.txt");
         public static Vector2 textLoc1 = new Vector2();
         public static Vector2 textLoc2 = new Vector2();
         public static Vector2 textLoc3 = new Vector2();
