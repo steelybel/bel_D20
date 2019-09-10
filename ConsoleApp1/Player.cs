@@ -25,6 +25,7 @@ namespace bel_D20
 
         }
         //public int die = pcClass.wepDie;
+        public int AC = 10;
         public int wepLevel = 0;
         public void StatInit()
         {

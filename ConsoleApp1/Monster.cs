@@ -8,6 +8,7 @@ namespace bel_D20
 {
     class Monster
     {
+        public bool selected;
         public string name;
         public Rectangle sprite;
         public Color color;
@@ -18,6 +19,7 @@ namespace bel_D20
         public int atkDmg;
         public Skill skill;
         public int skillChance;
+        public FX hitFX;
         Rectangle infobox = new Rectangle(0, 0, 128, 48);
         Rectangle mouseArea;
         public void Spawn(Vector2 pos)
@@ -33,20 +35,38 @@ namespace bel_D20
             if (rl.CheckCollisionPointRec(rl.GetMousePosition(),mouseArea) && hitPoints > 0)
             {
                 UI.MouseOver(UI.uiWhite2, crap, UI.bigFont);
+                selected = true;
+            }
+            else
+            {
+                selected = false;
+            }
+            if (hitPoints <= 0)
+            {
+                color = Color.MAROON;
             }
         }
     }
+    class Dead : Monster
+    {
+        public Dead()
+        {
+            sprite = Sprites.grave;
+        }
+    }
+    //HUMANOIDS=============================
     class Goblin : Monster
     {
         public Goblin()
         {
             name = "Goblin";
             sprite = Sprites.gobby;
-            color = new Color(154,255,84,255);
+            color = Color.LIME;//new Color(154,255,84,255);
             maxHP = 7;
             AC = 15;
             plusHit = 4;
             atkDmg = (Dice.d6(1) + 2);
+            hitFX = new Slash();
         }
     }
     class Hobgoblin_m : Monster
@@ -60,6 +80,7 @@ namespace bel_D20
             AC = 18;
             plusHit = 3;
             atkDmg = (Dice.d8(1) + 1);
+            hitFX = new Slash();
         }
     }
     class Hobgoblin_f : Monster
@@ -73,8 +94,109 @@ namespace bel_D20
             AC = 18;
             plusHit = 3;
             atkDmg = (Dice.d8(1) + 1);
+            hitFX = new Slash();
         }
     }
+    class Orc : Monster
+    {
+        public Orc()
+        {
+            name = "Orc Marauder";
+            sprite = Sprites.orc;
+            color = new Color(235, 236, 128, 255);
+            maxHP = 15;
+            AC = 13;
+            plusHit = 5;
+            atkDmg = (Dice.d12(1) + 3);
+            hitFX = new Slash();
+        }
+    }
+    class Drow : Monster
+    {
+        public Drow()
+        {
+            name = "Drow Archer";
+            sprite = Sprites.drow;
+            color = Color.DARKGRAY;
+            maxHP = 15;
+            AC = 13;
+            plusHit = 5;
+            atkDmg = (Dice.d12(1) + 3);
+            hitFX = new Pierce();
+        }
+    }
+    //UNDEAD================================
+    class Zombie : Monster
+    {
+        public Zombie()
+        {
+            name = "Shambling Corpse";
+            sprite = Sprites.zom;
+            color = Color.BEIGE;
+            maxHP = 22;
+            AC = 8;
+            plusHit = 3;
+            atkDmg = (Dice.d6(1) + 1);
+            hitFX = new Blunt();
+        }
+    }
+    class Bones : Monster
+    {
+        public Bones()
+        {
+            name = "Skeleton";
+            sprite = Sprites.bones;
+            color = Color.RAYWHITE;
+            maxHP = 13;
+            AC = 13;
+            plusHit = 4;
+            atkDmg = (Dice.d6(1) + 2);
+            hitFX = new Slash();
+        }
+    }
+    class Dracula : Monster
+    {
+        public Dracula()
+        {
+            name = "Vampire";
+            sprite = Sprites.drac;
+            color = new Color(213, 191, 255,255);
+            maxHP = 82;
+            AC = 15;
+            plusHit = 6;
+            atkDmg = (Dice.d4(2) + 3);
+            hitFX = new Slash();
+        }
+    }
+    class Ghost : Monster
+    {
+        public Ghost()
+        {
+            name = "Ghost";
+            sprite = Sprites.boo;
+            color = Color.SKYBLUE;
+            maxHP = 45;
+            AC = 11;
+            plusHit = 5;
+            atkDmg = (Dice.d6(4) + 3);
+            hitFX = new Slash();
+        }
+    }
+    class Mummy : Monster
+    {
+        public Mummy()
+        {
+            name = "Mummy";
+            sprite = Sprites.mummy;
+            color = Color.BEIGE;
+            maxHP = 58;
+            AC = 11;
+            plusHit = 5;
+            atkDmg = (Dice.d6(2) + 3);
+            hitFX = new Blunt();
+        }
+    }
+    //ANIMALS===============================
     class Wolf : Monster
     {
         public Wolf()
@@ -86,6 +208,7 @@ namespace bel_D20
             AC = 13;
             plusHit = 4;
             atkDmg = (Dice.d4(2) + 2);
+            hitFX = new Slash();
         }
     }
     class Boar : Monster
@@ -99,6 +222,7 @@ namespace bel_D20
             AC = 11;
             plusHit = 3;
             atkDmg = (Dice.d6(1) + 1);
+            hitFX = new Blunt();
         }
     }
     class Bear : Monster
@@ -112,8 +236,10 @@ namespace bel_D20
             AC = 11;
             plusHit = 3;
             atkDmg = (Dice.d6(1) + 2);
+            hitFX = new Slash();
         }
     }
+    //FINAL BOSS============================
     class UltraLich : Monster
     {
         public UltraLich()
@@ -125,6 +251,7 @@ namespace bel_D20
             AC = 18;
             plusHit = 3;
             atkDmg = (Dice.d8(1) + 1);
+            hitFX = new Slash();
         }
     }
 }

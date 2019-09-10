@@ -18,7 +18,8 @@ namespace bel_D20
         int currentFrame = 0;
         int currentLine = 0;
         int framesCounter = 0;
-        public void Draw(Vector2 pos)
+        public Vector2 pos;
+        public void Draw()
         {
             framesCounter++;
             if (framesCounter > 2)
@@ -38,7 +39,7 @@ namespace bel_D20
 
                 framesCounter = 0;
             }
-            Vector2 newPos = new Vector2(pos.x - (size.x / 4), pos.y - (size.y / 4));
+            Vector2 newPos = new Vector2(pos.x - (size.x / 2), pos.y - (size.y / 2));
             frame = new Rectangle(size.x * currentFrame, size.y * currentLine, size.x, size.y);
             if (active) rl.DrawTextureRec(sprite, frame, newPos, color);
         }
@@ -56,6 +57,17 @@ namespace bel_D20
             size = new Vector2(64, 64);
             numFrames = 10;
             numLines = 0;
+        }
+    }
+    class Blunt2 : FX
+    {
+        public Blunt2()
+        {
+            sprite = Sprites.blunt2;
+            color = Color.WHITE;
+            size = new Vector2(64, 64);
+            numFrames = 4;
+            numLines = 2;
         }
     }
     class Slash : FX

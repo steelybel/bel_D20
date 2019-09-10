@@ -32,5 +32,22 @@ namespace bel_D20
             rl.DrawTextureNPatch(uiBlock, uiText, infoRec, Vector2.Zero, 0f, Color.WHITE);
             rl.DrawTextEx(font, words, new Vector2(rl.GetMouseX() + (infoRec.width / 2) - (rl.MeasureTextEx(font, words, font.baseSize,0f).x/2), rl.GetMouseY() + 20), font.baseSize, 0, Color.BLACK);
         }
+        public static void MouseOverIcon(Texture2D uiBlock, string words, Font font, Icon icon)
+        {
+            Rectangle infoRec = new Rectangle(rl.GetMouseX(), rl.GetMouseY() + 16, rl.MeasureTextEx(font, words, font.baseSize, 0f).x + 12 + icon.spr.width, rl.MeasureTextEx(font, words, font.baseSize, 0f).y + 8);
+            if (icon.spr.height > rl.MeasureTextEx(font, words, font.baseSize, 0f).y)
+            {
+                infoRec = new Rectangle(rl.GetMouseX(), rl.GetMouseY() + 16, rl.MeasureTextEx(font, words, font.baseSize, 0f).x +12 + icon.spr.width, icon.spr.height + 8);
+            }
+            else
+            {
+                infoRec = new Rectangle(rl.GetMouseX(), rl.GetMouseY() + 16, rl.MeasureTextEx(font, words, font.baseSize, 0f).x + 12 + icon.spr.width, rl.MeasureTextEx(font, words, font.baseSize, 0f).y + 8);
+            }
+            Vector2 getMouse = new Vector2(rl.GetMouseX(), rl.GetMouseY());
+            rl.DrawTextureNPatch(uiBlock, uiText, infoRec, Vector2.Zero, 0f, Color.WHITE);
+            rl.DrawTextureRec(Sprites.tiles, icon.spr, new Vector2(rl.GetMouseX() + 4, rl.GetMouseY() + 20),icon.color);
+            rl.DrawTextEx(font, words, new Vector2(rl.GetMouseX() + ((infoRec.width - icon.spr.width) / 2) - (rl.MeasureTextEx(font, words, font.baseSize, 0f).x / 2) + icon.spr.width, rl.GetMouseY() + 20), font.baseSize, 0, Color.BLACK);
+            
+        }
     }
 }

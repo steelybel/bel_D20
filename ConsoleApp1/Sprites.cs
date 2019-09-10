@@ -8,6 +8,7 @@ namespace bel_D20
 {
     class Sprites
     {
+        public static Texture2D tiles = rl.LoadTexture("Resources/Sprites/fantasy-tileset.png");
         //PLAYER
         public static Rectangle skin1 = new Rectangle(0, 0, 16, 16);
         public static Rectangle skin1f = new Rectangle(17, 0, 16, 16);
@@ -73,20 +74,71 @@ namespace bel_D20
         public static List<Rectangle> bow = new List<Rectangle> { bow1, bow2, bow3, bow4 };
         public static List<Rectangle> axe = new List<Rectangle> { axe1, axe2, axe3, axe4 };
         public static List<Rectangle> staff = new List<Rectangle> { staff1, staff2, staff3, staff4 };
-        //ENEMY
-        public static Texture2D tiles = rl.LoadTexture("Resources/Sprites/fantasy-tileset.png");
+        //ICONS ======
+        public static Rectangle i_sword = new Rectangle(0, 256, 32, 32);
+        public static Rectangle i_knife = new Rectangle(64, 320, 16, 16);
+        public static Rectangle[] symbol = new Rectangle[6]
+        {
+            new Rectangle(0, 544, 32, 32),
+            new Rectangle(32, 544, 32, 32),
+            new Rectangle(64, 544, 32, 32),
+            new Rectangle(96, 544, 32, 32),
+            new Rectangle(128, 544, 32, 32),
+            new Rectangle(160, 544, 32, 32),
+        };
+        //ENEMY ======
+        public static Rectangle grave = new Rectangle(96, 512, 32, 32);
+        //humanoid monsters
         public static Rectangle gobby = new Rectangle(0,704,32,32);
         public static Rectangle orc = new Rectangle(96,704,32,32);
         public static Rectangle hob1 = new Rectangle(0,576,32,32);
         public static Rectangle hob2 = new Rectangle(96,576,32,32);
-        public static Rectangle lich = new Rectangle(224,704,32,32);
+        public static Rectangle barb = new Rectangle(64,576,32,32);
+        public static Rectangle dorf = new Rectangle(32,576,32,32);
+        public static Rectangle drow = new Rectangle(128,576,32,32);
+        //undead
+        public static Rectangle zom = new Rectangle(32,704,32,32);
+        public static Rectangle bones = new Rectangle(64,704,32,32);
+        public static Rectangle drac = new Rectangle(128,672,32,32);
+        public static Rectangle mummy = new Rectangle(160,672,32,32);
+        public static Rectangle boo = new Rectangle(192,672,32,32);
+        //bugs
+        public static Rectangle spoder = new Rectangle(96, 608, 32, 32);
+        public static Rectangle ciders = new Rectangle(64, 608, 32, 32);
+        //animals
+        public static Rectangle frog = new Rectangle(96, 608, 32, 32);
+        public static Rectangle bat1 = new Rectangle(64,640,32,32);
+        public static Rectangle bat2 = new Rectangle(96,640,32,32);
         public static Rectangle wolf = new Rectangle(160,640,32,32);
         public static Rectangle boar = new Rectangle(192,640,32,32);
         public static Rectangle bear = new Rectangle(224,640,32,32);
+        public static Rectangle lich = new Rectangle(224, 704, 32, 32);
         //FX
         public static Texture2D magMis = rl.LoadTexture("Resources/FX/impact01.png");
         public static Texture2D blunt = rl.LoadTexture("Resources/FX/break01.png");
+        public static Texture2D blunt2 = rl.LoadTexture("Resources/FX/shards01.png");
         public static Texture2D slash = rl.LoadTexture("Resources/FX/hit01.png");
         public static Texture2D pierce = rl.LoadTexture("Resources/FX/shards02.png");
+    }
+    class Icon
+    {
+        public Rectangle spr;
+        public Color color;
+    }
+    class Icon_Sword : Icon
+    {
+        public Icon_Sword()
+        {
+            spr = Sprites.i_sword;
+            color = Color.RAYWHITE;
+        }
+    }
+    class IconSpell : Icon
+    {
+        public IconSpell(int num, Color col)
+        {
+            spr = Sprites.symbol[num];
+            color = col;
+        }
     }
 }

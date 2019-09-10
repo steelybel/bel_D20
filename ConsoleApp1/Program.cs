@@ -18,6 +18,7 @@ namespace bel_D20
         public static int timer = 0;
         public static Dice dice = new Dice();
         public static bool looping = true;
+        public static int turn = 0;
         public static int Main()
         {
             // Initialization
@@ -26,7 +27,7 @@ namespace bel_D20
             int screenHeight = 450;
             rl.InitWindow(screenWidth, screenHeight, "Dungeons!");
             rl.SetTargetFPS(60);
-            //rl.LoadFont("Resources/Fonts/alagard_by_pix3m-d6awiwp.ttf");
+            Rectangle testRec = new Rectangle(0, screenHeight-96, 32, 32);
             Texture2D hero = rl.LoadTexture("Resources/Sprites/roguelikeChar_transparent.png");
             bool market = false;
             int day = 0;
@@ -56,12 +57,34 @@ namespace bel_D20
                 new Vector2((screenWidth / 2) + 24, 200),
                 new Vector2((screenWidth / 2) + 72, 200)
             };
-            Monster[] monsterArray = new Monster[]
+            List<Monster> monsterList = new List<Monster>();
+            Monster[] monstersLv1 = new Monster[]
             {
                 new Monster(),
                 new Monster(),
                 new Monster(),
                 new Goblin(),
+                new Goblin(),
+                new Goblin(),
+                new Orc(),
+                new Orc(),
+                new Zombie(),
+                new Bones(),
+                new Wolf(),
+                new Bear(),
+                new Boar(),
+            };
+            Monster[] monstersLv2 = new Monster[]
+            {
+                new Monster(),
+                new Monster(),
+                new Goblin(),
+                new Goblin(),
+                new Orc(),
+                new Orc(),
+                new Orc(),
+                new Zombie(),
+                new Bones(),
                 new Hobgoblin_m(),
                 new Hobgoblin_f(),
                 new Wolf(),
@@ -79,10 +102,12 @@ namespace bel_D20
             for (int h = 0; h < 4; h++)
             {
                 party[h].StatInit();
-                monsters[h] = monsterArray[rng.Next(0, monsterArray.Length)];
-                monsters[h].Spawn(monsterPos[h]);
             }
-            
+            for (int m = 0; m < monstersLv1.Length; m++)
+            {
+                monsterList.Add(monstersLv1[m]);
+            }
+            NewEncounter(monsters, monsterList, monsterPos);
             //--------------------------------------------------------------------------------------
 
             // Main game loop
@@ -90,56 +115,40 @@ namespace bel_D20
             {
                 // Update
                 //----------------------------------------------------------------------------------
-
-                //string textStr = "Congrats! You rolled a " + dice.d20(1) + "\n"
-                //+ GameText.HeroAtk("Jon","Goblin",dice.d8(1));
+                if (rl.CheckCollisionPointRec(rl.GetMousePosition(), testRec))
+                {
+                    UI.MouseOverIcon(UI.uiTan, "Whatta hell fried chicken", UI.bigFont, new Icon_Sword());
+                }
                 if (!choosing && !currentFX.active)
                 {
-
-                    if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
+                    BattleAct(party);
+                    for (int h = 0; h < monsters.Length; h++)
                     {
-                        BattleAct();
-                    }
-                    if (rl.IsKeyPressed(KeyboardKey.KEY_TWO))
-                    {
-                        for (int h = 0; h < 4; h++)
-                        {
-                            monsters[h] = monsterArray[rng.Next(0, monsterArray.Length)];
-                            monsters[h].Spawn(monsterPos[h]);
-                        }
-                        //enemy = monsterArray[rng.Next(0,monsterArray.Length)];
-                        //enemy.Spawn(enemyPos);
-                    }
-                    if (rl.IsKeyPressed(KeyboardKey.KEY_THREE))
-                    {
-                        currentFX = new Pierce();
-                        currentFX.active = true;
-                        currentFX.Reset();
+                        if (monsters[h].hitPoints <= 0) monsters[h] = new Monster();
                     }
                 }
                 else if (!currentFX.active)
                 {
+                    for (int h = 0; h < monsters.Length; h++)
+                    {
+                        if (monsters[h].selected && rl.IsMouseButtonPressed(0))
+                        {
+                            Attack(party[turn], monsters[h],monsterPos[h]);
+                            choosing = false;
+                            if (turn == party.Length-1) { turn = 0; }
+                            else { turn += 1; }
+                        }
+                        
+                    }
                     if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
                     {
-                        Attack(party[0], enemy);
-                        //canAct = true;
-                        choosing = false;
+                        NewEncounter(monsters, monsterList, monsterPos);
                     }
                     if (rl.IsKeyPressed(KeyboardKey.KEY_TWO))
                     {
-                        Attack(party[1], enemy);
-                        choosing = false;
+                        NewEncounter(monsters, monsterList, monsterPos);
                     }
-                    if (rl.IsKeyPressed(KeyboardKey.KEY_THREE))
-                    {
-                        Attack(party[2], enemy);
-                        choosing = false;
-                    }
-                    if (rl.IsKeyPressed(KeyboardKey.KEY_FOUR))
-                    {
-                        Attack(party[3], enemy);
-                        choosing = false;
-                    }
+
                 }
                 GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).x / 2), 64);
                 GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 0f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y);
@@ -170,7 +179,7 @@ namespace bel_D20
                 //hero2.Draw(hero, hero2Pos);
                 //hero3.Draw(hero, hero3Pos);
                 //hero4.Draw(hero, hero4Pos);
-                if (currentFX.active) currentFX.Draw(enemyPos);
+                if (currentFX.active) currentFX.Draw();
                 rl.EndDrawing();
                 //----------------------------------------------------------------------------------
             }
@@ -187,22 +196,22 @@ namespace bel_D20
 
         }
         
-        static void BattleAct()
+        static void BattleAct(Player[] chars)
         {
             //canAct = false;
-            GameText.SpitOut("Who will attack?");
+            GameText.SpitOut("What will " + chars[turn].name + " do?");
             choosing = true;
             
         }
 
-        static void Attack(Player player, Monster target)
+        static void Attack(Player player, Monster target, Vector2 fxPos)
         {
             int hitRoll = Dice.d20(1);
-            GameText.SpitOut("Rolled " + (hitRoll + player.scoreMod(0)));
-            if ((hitRoll + player.scoreMod(0)) > target.AC || hitRoll == 20)
+            //GameText.SpitOut("Rolled " + (hitRoll + player.scoreMod(0)));
+            if ((hitRoll + player.scoreMod(0)) + 5 > target.AC || hitRoll == 20)
             {
                 if (hitRoll == 20) GameText.SpitOut("Critical hit!");
-                DrawFX(player.pcClass.hitFX);
+                DrawFX(player.pcClass.hitFX,fxPos);
                 int dmgRoll = player.pcClass.wepDie + player.wepLevel;
                 //AtkTimer(player, target, dmgRoll);
                 AtkOutcome(player, target, dmgRoll);
@@ -212,9 +221,21 @@ namespace bel_D20
                 GameText.SpitOut(GameText.HeroMiss(player.name, target.name));
             }
         }
-        static void AtkTimer(Player player, Monster target, int finalDmg)
+        static void MonsterAttack(Monster monster, Player target)
         {
-            timer = 60;
+            int hitRoll = Dice.d20(1);
+            //GameText.SpitOut("Rolled " + (hitRoll + player.scoreMod(0)));
+            if ((hitRoll + monster.plusHit) > target.AC || hitRoll == 20)
+            {
+                if (hitRoll == 20) GameText.SpitOut("Critical hit!");
+                //DrawFX(monster.hitFX);
+                int dmgRoll = monster.atkDmg;
+                MonsterOutcome(monster, target, dmgRoll);
+            }
+            else
+            {
+                GameText.SpitOut(GameText.HeroMiss(monster.name, target.name));
+            }
         }
         static void AtkOutcome(Player player, Monster target, int dmg)
         {
@@ -229,6 +250,19 @@ namespace bel_D20
             }
             target.hitPoints -= dmg;
         }
+        static void MonsterOutcome(Monster monster, Player target, int dmg)
+        {
+            if (dmg >= target.hitPoints)
+            {
+                GameText.SpitOut(GameText.HeroAtk(monster.name, target.name, dmg));
+                GameText.SpitOut(target.name + " has fallen in battle.");
+            }
+            else
+            {
+                GameText.SpitOut(GameText.HeroAtk(monster.name, target.name, dmg));
+            }
+            target.hitPoints -= dmg;
+        }
         static void UseSkill(Skill skill, int target)
         {
             if (skill.party)
@@ -237,11 +271,29 @@ namespace bel_D20
             }
             GameText.SpitOut(GameText.HeroAtk("Jon", "Goblin", Dice.d8(1)));
         }
-        static void DrawFX(FX fx)
+        static void DrawFX(FX fx, Vector2 pos)
         {
             currentFX = fx;
+            currentFX.pos = pos;
             currentFX.Reset();
             currentFX.active = true;
+        }
+        static void NewEncounter(Monster[] enc, List<Monster> list, Vector2[] pos)
+        {
+            for (int a = 0; a < enc.Length; a++)
+            {
+                Monster newMon = list[rng.Next(0, list.Count)];
+                for (int b = 0; b < enc.Length;)
+                {
+                    while (newMon == enc[b])
+                    {
+                        newMon = list[rng.Next(0, list.Count)];
+                    }
+                    b++;
+                }
+                enc[a] = newMon;
+                newMon.Spawn(pos[a]);
+            }
         }
     }
 }
