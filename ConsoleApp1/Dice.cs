@@ -8,8 +8,8 @@ namespace bel_D20
 {
     class Dice
     {
-        public Random rng = new Random();
-        public int d20 (int numDice)
+        static Random rng = new Random();
+        public static int d20 (int numDice)
         {
             int d = 0;
             for (int i = 0; i < numDice; i++)
@@ -18,7 +18,7 @@ namespace bel_D20
             }
             return d;
         }
-        public int d12(int numDice)
+        public static int d12(int numDice)
         {
             int d = 0;
             for (int i = 0; i < numDice; i++)
@@ -27,7 +27,7 @@ namespace bel_D20
             }
             return d;
         }
-        public int d10(int numDice)
+        public static int d10(int numDice)
         {
             int d = 0;
             for (int i = 0; i < numDice; i++)
@@ -36,7 +36,7 @@ namespace bel_D20
             }
             return d;
         }
-        public int d8(int numDice)
+        public static int d8(int numDice)
         {
             int d = 0;
             for (int i = 0; i < numDice; i++)
@@ -45,7 +45,7 @@ namespace bel_D20
             }
             return d;
         }
-        public int d6(int numDice)
+        public static int d6(int numDice)
         {
             int d = 0;
             for (int i = 0; i < numDice; i++)
@@ -54,7 +54,7 @@ namespace bel_D20
             }
             return d;
         }
-        public int d4(int numDice)
+        public static int d4(int numDice)
         {
             int d = 0;
             for (int i = 0; i < numDice; i++)

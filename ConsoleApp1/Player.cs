@@ -10,17 +10,37 @@ namespace bel_D20
     {
         public Race pcRace;
         public Class pcClass;
+        public int maxHP;
+        public int hitPoints;
         public string name = "fgsfds";
         //public int skinColor;
-        public int[] stats = new int[6];
-        int[] finStats = new int[6];
-        int pStr;
-        int pDex;
-        int pCon;
-        int pInt;
-        int pWis;
-        int pCha;
-        public int wepLevel;
+        public int[] score = new int[6];
+        public int[] finScore = new int[6];
+        public int scoreMod(int abilityScore)
+        {
+            int c = finScore[abilityScore];
+            c -= 10;
+            c /= 2;
+            return c;
+
+        }
+        //public int die = pcClass.wepDie;
+        public int wepLevel = 0;
+        public void StatInit()
+        {
+            score = pcClass.scores;
+            finScore = new int[6]
+            {
+            score[0] + pcRace.scoreMod[0],
+            score[1] + pcRace.scoreMod[1],
+            score[2] + pcRace.scoreMod[2],
+            score[3] + pcRace.scoreMod[3],
+            score[4] + pcRace.scoreMod[4],
+            score[5] + pcRace.scoreMod[5]
+            };
+            maxHP = pcClass.baseHP + scoreMod(2);
+            hitPoints = maxHP;
+        }
         Rectangle skin
         {
             get
@@ -104,8 +124,8 @@ namespace bel_D20
         public Rectangle skin;
         public Rectangle hair;
         public Rectangle hair2;
-        //stats
-        public int[] skillMod = new int[6];
+        //score
+        public int[] scoreMod = new int[6];
     }
     //RACES
     class Human_m : Race
@@ -115,6 +135,7 @@ namespace bel_D20
             if (skinColor == 0) skin = Sprites.skin1; hair = new Rectangle(324, 0, 16, 16);
             if (skinColor == 1) skin = Sprites.skin2; hair = new Rectangle(392, 68, 16, 16);
             if (skinColor == 2) skin = Sprites.skin3; hair = new Rectangle(392, 68, 16, 16);
+            scoreMod = new int[6] { 1, 1, 1, 1, 1, 1 };
         }
     }
     class Human_f : Race
@@ -124,6 +145,7 @@ namespace bel_D20
             if (skinColor == 0) skin = Sprites.skin1f; hair = new Rectangle(341, 0, 16, 16);
             if (skinColor == 1) skin = Sprites.skin2f; hair = new Rectangle(409, 68, 16, 16);
             if (skinColor == 2) skin = Sprites.skin3f; hair = new Rectangle(443, 85, 16, 16);
+            scoreMod = new int[6] { 1, 1, 1, 1, 1, 1 };
         }
     }
     class Elf_m : Race
@@ -134,6 +156,7 @@ namespace bel_D20
             if (skinColor == 1) skin = Sprites.skin2;
             if (skinColor == 2) skin = Sprites.skin3;
             hair = new Rectangle(341, 68, 16, 16);
+            scoreMod = new int[6] { 0, 2, 0, 1, 0, 0 };
         }
     }
     class Elf_f : Race
@@ -144,6 +167,7 @@ namespace bel_D20
             if (skinColor == 1) skin = Sprites.skin2f;
             if (skinColor == 2) skin = Sprites.skin3f;
             hair = new Rectangle(358, 85, 16, 16);
+            scoreMod = new int[6] { 0, 2, 0, 1, 0, 0 };
         }
     }
     class Dwarf_m : Race
@@ -155,6 +179,7 @@ namespace bel_D20
             if (skinColor == 2) skin = Sprites.skin3;
             hair = new Rectangle(443, 17, 16, 16);
             hair2 = new Rectangle(426, 51, 16, 16);
+            scoreMod = new int[6] { 0, 0, 2, 0, 1, 0 };
         }
     }
     class Dwarf_f : Race
@@ -166,6 +191,7 @@ namespace bel_D20
             if (skinColor == 2) skin = Sprites.skin3f;
             hair = new Rectangle(443, 17, 16, 16);
             hair2 = new Rectangle(426, 51, 16, 16);
+            scoreMod = new int[6] { 0, 0, 2, 0, 1, 0 };
         }
     }
     class Hobbit_m : Race
@@ -175,7 +201,7 @@ namespace bel_D20
             if (skinColor == 0) skin = Sprites.skin1; hair = new Rectangle(426, 34, 16, 16);
             if (skinColor == 1) skin = Sprites.skin2; hair = new Rectangle(358, 34, 16, 16);
             if (skinColor == 2) skin = Sprites.skin3; hair = new Rectangle(426, 102, 16, 16);
-
+            scoreMod = new int[6] { 0, 2, 0, 0, 0, 1 };
         }
     }
     class Hobbit_f : Race
@@ -185,7 +211,7 @@ namespace bel_D20
             if (skinColor == 0) skin = Sprites.skin1f; hair = new Rectangle(409, 0, 16, 16);
             if (skinColor == 1) skin = Sprites.skin2f; hair = new Rectangle(341, 0, 16, 16);
             if (skinColor == 2) skin = Sprites.skin3f; hair = new Rectangle(409, 102, 16, 16);
-
+            scoreMod = new int[6] { 0, 2, 0, 0, 0, 1 };
         }
     }
     //CLASSES
@@ -198,7 +224,12 @@ namespace bel_D20
         public Rectangle shoe;
         public Rectangle shield;
         public List<Rectangle> wepf;// = new List<Rectangle>();
-        //stats
+        //score
+        public int baseHP;
+        public int wepDie;
+        public int[] scores = new int[6];
+        public bool ranged = false;
+        public FX hitFX;
     }
     class Barbarian : Class
     {
@@ -208,6 +239,10 @@ namespace bel_D20
             bottom = Sprites.pants1;
             shoe = Sprites.shoe2;
             wepf = Sprites.axe;
+            baseHP = 12;
+            wepDie = Dice.d12(1);
+            scores = new int[6] { 15, 12, 14, 8, 13, 10 };
+            hitFX = new Blunt();
         }
     }
     class Cleric : Class
@@ -220,7 +255,10 @@ namespace bel_D20
             shoe = Sprites.shoe3;
             shield = Sprites.shield1;
             wepf = Sprites.mace;
-            
+            baseHP = 8;
+            wepDie = Dice.d6(1);
+            scores = new int[6] { 12, 10, 13, 8, 15, 14 };
+            hitFX = new Blunt();
         }
     }
     class Rogue : Class
@@ -231,6 +269,10 @@ namespace bel_D20
             bottom = Sprites.pants1;
             shoe = Sprites.shoe1;
             wepf = Sprites.knife;
+            baseHP = 8;
+            wepDie = Dice.d8(1);
+            scores = new int[6] { 14, 15, 8, 12, 10, 13 };
+            hitFX = new Pierce();
         }
     }
     class Fighter : Class
@@ -242,6 +284,10 @@ namespace bel_D20
             bottom = Sprites.pants4;
             shoe = Sprites.shoe1;
             wepf = Sprites.sword;
+            baseHP = 10;
+            wepDie = Dice.d10(1);
+            scores = new int[6] { 15, 14, 13, 8, 10, 12 };
+            hitFX = new Slash();
         }
     }
     class Wizard : Class
@@ -253,6 +299,10 @@ namespace bel_D20
             bottom = new Rectangle(52, 34, 16, 16);
             //shoe = new Rectangle(69, 0, 16, 16);
             wepf = Sprites.staff;
+            baseHP = 6;
+            wepDie = Dice.d4(1);
+            scores = new int[6] { 8, 12, 10, 15, 14, 13 };
+            hitFX = new Blunt();
         }
     }
     //premade chars

@@ -8,6 +8,7 @@ namespace bel_D20
 {
     class Sprites
     {
+        //PLAYER
         public static Rectangle skin1 = new Rectangle(0, 0, 16, 16);
         public static Rectangle skin1f = new Rectangle(17, 0, 16, 16);
         public static Rectangle skin2 = new Rectangle(0, 17, 16, 16);
@@ -41,6 +42,7 @@ namespace bel_D20
         public static Rectangle shoe7 = new Rectangle(69, 119, 16, 16);
         public static Rectangle shoe8 = new Rectangle(69, 136, 16, 16);
         public static Rectangle shield1 = new Rectangle(613, 51, 16, 16);
+        public static Rectangle shield2 = new Rectangle(647, 34, 16, 16);
         public static Rectangle sword1 = new Rectangle(732, 102, 16, 16);
         public static Rectangle sword2 = new Rectangle(749, 102, 16, 16);
         public static Rectangle sword3 = new Rectangle(766, 102, 16, 16);
@@ -71,5 +73,20 @@ namespace bel_D20
         public static List<Rectangle> bow = new List<Rectangle> { bow1, bow2, bow3, bow4 };
         public static List<Rectangle> axe = new List<Rectangle> { axe1, axe2, axe3, axe4 };
         public static List<Rectangle> staff = new List<Rectangle> { staff1, staff2, staff3, staff4 };
+        //ENEMY
+        public static Texture2D tiles = rl.LoadTexture("Resources/Sprites/fantasy-tileset.png");
+        public static Rectangle gobby = new Rectangle(0,704,32,32);
+        public static Rectangle orc = new Rectangle(96,704,32,32);
+        public static Rectangle hob1 = new Rectangle(0,576,32,32);
+        public static Rectangle hob2 = new Rectangle(96,576,32,32);
+        public static Rectangle lich = new Rectangle(224,704,32,32);
+        public static Rectangle wolf = new Rectangle(160,640,32,32);
+        public static Rectangle boar = new Rectangle(192,640,32,32);
+        public static Rectangle bear = new Rectangle(224,640,32,32);
+        //FX
+        public static Texture2D magMis = rl.LoadTexture("Resources/FX/impact01.png");
+        public static Texture2D blunt = rl.LoadTexture("Resources/FX/break01.png");
+        public static Texture2D slash = rl.LoadTexture("Resources/FX/hit01.png");
+        public static Texture2D pierce = rl.LoadTexture("Resources/FX/shards02.png");
     }
 }

@@ -45,6 +45,8 @@ fonts
  * [Roguelike Characters](https://www.kenney.nl/assets/roguelike-characters) - [Kenney](https://www.kenney.nl/), licensed as [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
  * [Roguelike/RPG pack](https://www.kenney.nl/assets/roguelike-rpg-pack) - [Kenney](https://www.kenney.nl/), licensed as [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
  * [Roguelike Indoors](https://www.kenney.nl/assets/roguelike-indoors) - [Kenney](https://www.kenney.nl/), licensed as [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0/)
+ * [32x32 Fantasy Tileset](https://opengameart.org/content/32x32-fantasy-tileset) - [Jerom](https://opengameart.org/users/jerom), licensed as [CC BY-SA 3.0](https://creativecommons.org/licenses/by-sa/3.0/)
+ * [Pixelated Attack/Hit Animations](https://v-ktor.itch.io/pixelated-attackhit-animations) - [Viktor](https://v-ktor.itch.io/), licensed as [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
 
 MIT License
 
