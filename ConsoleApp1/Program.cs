@@ -121,10 +121,17 @@ namespace bel_D20
                 }
                 if (!choosing && !currentFX.active)
                 {
-                    BattleAct(party);
-                    for (int h = 0; h < monsters.Length; h++)
+                    if (Array.TrueForAll(monsters,element => element.hitPoints <= 0))
                     {
-                        if (monsters[h].hitPoints <= 0) monsters[h] = new Monster();
+                        NewEncounter(monsters, monsterList, monsterPos);
+                    }
+                    else
+                    {
+                        BattleAct(party);
+                        for (int h = 0; h < monsters.Length; h++)
+                        {
+                            if (monsters[h].hitPoints <= 0) monsters[h] = new Monster();
+                        }
                     }
                 }
                 else if (!currentFX.active)
