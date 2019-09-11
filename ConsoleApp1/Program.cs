@@ -14,6 +14,11 @@ namespace bel_D20
         static Random rng = new Random();
         static bool canAct = true;
         static bool choosing = true;
+        static bool choice = false;
+        static Skill skill = null;
+        static int multTarg = 0;
+        static List<int> targets = new List<int>();
+        static bool splReady = false;
         public static FX currentFX = new FX();
         public static int timer = 0;
         public static Dice dice = new Dice();
@@ -41,10 +46,24 @@ namespace bel_D20
             Monster enemy = new Monster();
             Vector2 enemyPos = new Vector2((screenWidth / 2) - 16, 200);
             Vector2 enemyHP = new Vector2();
-            Rectangle mainText = new Rectangle(200, 0, 400, 96);
+            Rectangle mainText = new Rectangle(160, 0, 480, 96);
             Vector2 textPlace = new Vector2((screenWidth / 2), 48);
             Font curFont = UI.bigFont;
             int textScl = curFont.baseSize;
+            Button[] encButtons = new Button[]
+            {
+                new B_Attack(),
+                new B_Spell(),
+                new B_Item(),
+                new B_Flee(),
+            };
+            int[] buttonPlaces = new int[]
+            {
+                160,
+                320,
+                480,
+                640,
+            };
             Vector2[] heroPos = new Vector2[4]
             {
                 new Vector2((screenWidth / 2) - 48, 300),
@@ -110,10 +129,6 @@ namespace bel_D20
             {
                 monsterList.Add(monstersLv1[m]);
             }
-            Button[] encButtons = new Button[]
-            {
-                new B_Attack()
-            };
             NewEncounter(monsters, monsterList, monsterPos);
             //--------------------------------------------------------------------------------------
 
@@ -122,39 +137,20 @@ namespace bel_D20
             {
                 // Update
                 //----------------------------------------------------------------------------------
+                if (skill == null) { multTarg = 0; }
                 if (rl.CheckCollisionPointRec(rl.GetMousePosition(), testRec))
                 {
                     UI.MouseOverIcon(UI.uiTan, "Whatta hell fried chicken", UI.bigFont, new Icon_Sword());
                 }
-                if (!choosing && !currentFX.active)
+                if (choosing && !currentFX.active)
                 {
-                    if (Array.TrueForAll(monsters,element => element.hitPoints <= 0))
+                    if (Array.TrueForAll(monsters, element => element.hitPoints <= 0))
                     {
                         fights = 0;
                         NewEncounter(monsters, monsterList, monsterPos);
                     }
-                    else
-                    {
-                        BattleAct(party);
-                        for (int h = 0; h < monsters.Length; h++)
-                        {
-                            if (monsters[h].hitPoints <= 0) monsters[h] = new Monster();
-                        }
-                    }
-                }
-                else if (!currentFX.active)
-                {
-                    for (int h = 0; h < monsters.Length; h++)
-                    {
-                        if (monsters[h].selected && rl.IsMouseButtonPressed(0))
-                        {
-                            Attack(party[turn], monsters[h],monsterPos[h]);
-                            choosing = false;
-                            if (turn == party.Length-1) { turn = 0; }
-                            else { turn += 1; }
-                        }
-                        
-                    }
+                    if (encButtons[0].clicked) { Act_ATK(party); }
+                    if (encButtons[1].clicked) { Act_SPL(party); }
                     if (rl.IsKeyPressed(KeyboardKey.KEY_ONE))
                     {
                         NewEncounter(monsters, monsterList, monsterPos);
@@ -163,7 +159,60 @@ namespace bel_D20
                     {
                         NewEncounter(monsters, monsterList, monsterPos);
                     }
-
+                    for (int h = 0; h < monsters.Length; h++)
+                    {
+                        if (monsters[h].hitPoints <= 0) monsters[h] = new Monster();
+                    }
+                }
+                else if (splReady && !currentFX.active)
+                {
+                    if (targets.Count > 0)
+                    {
+                        SkillUse(party[turn], monsters[targets.First()], monsterPos[targets.First()]);
+                        targets.Remove(targets.First());
+                    }
+                    else
+                    {
+                        splReady = false;
+                        if (turn == party.Length - 1) { turn = 0; }
+                        else { turn += 1; }
+                        GameText.SpitOut(GameText.battleAction(party[turn].name));
+                        choosing = true;
+                    }
+                }
+                if (choice && !currentFX.active)
+                {
+                    
+                    //choosing = false;
+                    for (int h = 0; h < monsters.Length; h++)
+                    {
+                        if (monsters[h].selected && rl.IsMouseButtonPressed(0))
+                        {
+                            if(skill == null)
+                            {
+                                Attack(party[turn], monsters[h], monsterPos[h]);
+                                if (turn == party.Length - 1) { turn = 0; }
+                                else { turn += 1; }
+                                GameText.SpitOut(GameText.battleAction(party[turn].name));
+                                choosing = true;
+                                choice = false;
+                            }
+                            else
+                            {
+                                if (targets.Count < (skill.numTimes))
+                                {
+                                    targets.Add(h);
+                                    if ((skill.numTimes - targets.Count) > 1) { GameText.SpitOut("Choose " + (skill.numTimes - targets.Count) + " more targets."); }
+                                    else { GameText.SpitOut("Choose " + (skill.numTimes - targets.Count) + " more targets."); }
+                                }
+                                else
+                                {
+                                    splReady = true;
+                                    choice = false;
+                                }
+                            }
+                        }
+                    }
                 }
                 GameText.textLoc1 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 1f).x / 2), 64);
                 GameText.textLoc2 = new Vector2((screenWidth / 2) - (rl.MeasureTextEx(curFont, GameText.textLatest2, textScl, 1f).x / 2), 64 - rl.MeasureTextEx(curFont, GameText.textLatest1, textScl, 0f).y);
@@ -177,6 +226,7 @@ namespace bel_D20
                 rl.BeginDrawing();
 
                 rl.ClearBackground(Color.RAYWHITE);
+                
                 rl.DrawTextureNPatch(UI.uiTan, UI.uiText, mainText, Vector2.Zero, 0f, Color.WHITE);
                 rl.DrawTextEx(curFont, GameText.textLatest4, GameText.textLoc4, textScl, 1, rl.Fade(Color.BLACK, 0.25f));
                 rl.DrawTextEx(curFont, GameText.textLatest3, GameText.textLoc3, textScl, 1, rl.Fade(Color.BLACK, 0.5f));
@@ -194,7 +244,11 @@ namespace bel_D20
                 //hero2.Draw(hero, hero2Pos);
                 //hero3.Draw(hero, hero3Pos);
                 //hero4.Draw(hero, hero4Pos);
-                encButtons[0].Draw(new Vector2(64, 320));
+                if (choosing)
+                {
+                    for (int b = 0; b < encButtons.Length; b++)
+                    encButtons[b].Draw(new Vector2(buttonPlaces[b], 384));
+                }
                 if (currentFX.active) currentFX.Draw();
                 rl.EndDrawing();
                 //----------------------------------------------------------------------------------
@@ -213,12 +267,27 @@ namespace bel_D20
 
         }
         
-        static void BattleAct(Player[] chars)
+        static void Act_ATK(Player[] chars)
         {
+            skill = null;
             //canAct = false;
-            GameText.SpitOut("What will " + chars[turn].name + " do?");
-            choosing = true;
+            GameText.SpitOut("Which enemy will " + chars[turn].name + " target?");
+            choosing = false;
+            choice = true;
             
+        }
+
+        static void Act_SPL(Player[] chars)
+        {
+            skill = new MagMissile();
+            //canAct = false;
+            targets = new List<int>();
+            multTarg = skill.numTimes;
+            GameText.SpitOut("Who will " + chars[turn].name + " target?");
+            choosing = false;
+            choice = true;
+            //for (int c = 0; c < skill.numTimes; c++) { multTarg++; }
+
         }
 
         static void Attack(Player player, Monster target, Vector2 fxPos)
@@ -237,6 +306,13 @@ namespace bel_D20
             {
                 GameText.SpitOut(GameText.HeroMiss(player.name, target.name));
             }
+        }
+        static void SkillUse(Player player, Monster target, Vector2 fxPos)
+        {
+            int dmgRoll = 0;
+            if (skill.alwaysHit) dmgRoll = skill.dmg + skill.addDmg;
+            DrawFX(skill.hitFX, fxPos);
+            AtkOutcome(player, target, dmgRoll);
         }
         static void MonsterAttack(Monster monster, Player target)
         {
@@ -280,18 +356,10 @@ namespace bel_D20
             }
             target.hitPoints -= dmg;
         }
-        static void UseSkill(Skill skill, int target)
-        {
-            if (skill.party)
-            {
-
-            }
-            GameText.SpitOut(GameText.HeroAtk("Jon", "Goblin", Dice.d8(1)));
-        }
-        static void DrawFX(FX fx, Vector2 pos)
+        static void DrawFX(FX fx, Vector2 position)
         {
             currentFX = fx;
-            currentFX.pos = pos;
+            currentFX.pos = position;
             currentFX.Reset();
             currentFX.active = true;
         }

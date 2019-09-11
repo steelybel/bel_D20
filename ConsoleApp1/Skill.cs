@@ -13,10 +13,13 @@ namespace bel_D20
         public bool party = false;
         public bool whole = false;
         public int dmg = 0;
-        public int scoreModDmg;
+        public int addDmg = 0;
+        //public int scoreMod;
         public int numTimes = 1;
+        int[] targets;
         public string flavor;
-
+        public FX hitFX;
+        public bool alwaysHit = false;
     }
     class MagMissile : Skill
     {
@@ -24,8 +27,11 @@ namespace bel_D20
         {
             icon = new IconSpell(3, new Color(155, 255, 205, 255));
             name = "Magic Missile";
-            dmg = (Dice.d4(1)) + 1;
+            hitFX = new MagMis();
+            dmg = Dice.d4(1);
+            addDmg = 1;
             numTimes = 3;
+            alwaysHit = true;
             flavor = "Casts three bolts of magic at targets of your choice.";
         }
     }

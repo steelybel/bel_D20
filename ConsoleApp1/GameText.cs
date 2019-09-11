@@ -27,7 +27,11 @@ namespace bel_D20
             textLatest1 = txt;
             txtLog.WriteLine(txt);
         }
-
+        public static string battleAction(string chrName)
+        {
+            string a = "What will " + chrName + " do?";
+            return a;
+        }
         public static string HeroAtk(string chrName, string enemyName, int dmg)
         {
             string a = chrName + " attacks! " + enemyName + " takes " + dmg + " damage.";

@@ -75,10 +75,11 @@ namespace bel_D20
         public static List<Rectangle> axe = new List<Rectangle> { axe1, axe2, axe3, axe4 };
         public static List<Rectangle> staff = new List<Rectangle> { staff1, staff2, staff3, staff4 };
         //ICONS ======
-        public static Rectangle i_sword = new Rectangle(0, 256, 32, 32);
-        public static Rectangle i_knife = new Rectangle(64, 320, 16, 16);
-        public static Rectangle i_book = new Rectangle(128, 224, 32, 32);
-        public static Rectangle i_item = new Rectangle(224, 192, 32, 32);
+        public static Rectangle i_sword = new Rectangle(0, 224, 32, 32);
+        public static Rectangle i_knife = new Rectangle(64, 288, 16, 16);
+        public static Rectangle i_book = new Rectangle(128, 192, 32, 32);
+        public static Rectangle i_item = new Rectangle(224, 160, 32, 32);
+        public static Rectangle i_flee = new Rectangle(192, 32, 32, 32);
         public static Rectangle[] symbol = new Rectangle[6]
         {
             new Rectangle(0, 544, 32, 32),
@@ -164,6 +165,14 @@ namespace bel_D20
         public I_Item()
         {
             spr = Sprites.i_item;
+            color = Color.WHITE;
+        }
+    }
+    class I_Flee : Icon
+    {
+        public I_Flee()
+        {
+            spr = Sprites.i_flee;
             color = Color.WHITE;
         }
     }
