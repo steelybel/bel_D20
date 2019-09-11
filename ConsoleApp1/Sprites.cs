@@ -77,6 +77,8 @@ namespace bel_D20
         //ICONS ======
         public static Rectangle i_sword = new Rectangle(0, 256, 32, 32);
         public static Rectangle i_knife = new Rectangle(64, 320, 16, 16);
+        public static Rectangle i_book = new Rectangle(128, 224, 32, 32);
+        public static Rectangle i_item = new Rectangle(224, 192, 32, 32);
         public static Rectangle[] symbol = new Rectangle[6]
         {
             new Rectangle(0, 544, 32, 32),
@@ -139,6 +141,30 @@ namespace bel_D20
         {
             spr = Sprites.symbol[num];
             color = col;
+        }
+    }
+    class I_Attack : Icon
+    {
+        public I_Attack()
+        {
+            spr = Sprites.i_sword;
+            color = Color.WHITE;
+        }
+    }
+    class I_Spell : Icon
+    {
+        public I_Spell()
+        {
+            spr = Sprites.i_book;
+            color = Color.WHITE;
+        }
+    }
+    class I_Item : Icon
+    {
+        public I_Item()
+        {
+            spr = Sprites.i_item;
+            color = Color.WHITE;
         }
     }
 }

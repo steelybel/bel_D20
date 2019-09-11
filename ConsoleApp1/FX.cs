@@ -22,7 +22,7 @@ namespace bel_D20
         public void Draw()
         {
             framesCounter++;
-            if (framesCounter > 2)
+            if (framesCounter > 1)
             {
                 currentFrame++;
                 if (currentFrame >= numFrames)

@@ -110,6 +110,10 @@ namespace bel_D20
             {
                 monsterList.Add(monstersLv1[m]);
             }
+            Button[] encButtons = new Button[]
+            {
+                new B_Attack()
+            };
             NewEncounter(monsters, monsterList, monsterPos);
             //--------------------------------------------------------------------------------------
 
@@ -190,6 +194,7 @@ namespace bel_D20
                 //hero2.Draw(hero, hero2Pos);
                 //hero3.Draw(hero, hero3Pos);
                 //hero4.Draw(hero, hero4Pos);
+                encButtons[0].Draw(new Vector2(64, 320));
                 if (currentFX.active) currentFX.Draw();
                 rl.EndDrawing();
                 //----------------------------------------------------------------------------------

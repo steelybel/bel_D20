@@ -33,10 +33,10 @@ namespace bel_D20
         public void Draw(Vector2 pos)
         {
             rl.DrawTextureRec(Sprites.tiles, sprite, new Vector2(pos.x - 16,pos.y - 16), color);
-            string crap = (name + "\nHP - " + hitPoints);
+            string crap = (name + "\nHP: " + hitPoints);
             if (rl.CheckCollisionPointRec(rl.GetMousePosition(),mouseArea) && hitPoints > 0)
             {
-                UI.MouseOver(UI.uiWhite2, crap, UI.bigFont);
+                UI.MouseOver(UI.uiWhite2, crap, UI.smallFont);
                 selected = true;
             }
             else
