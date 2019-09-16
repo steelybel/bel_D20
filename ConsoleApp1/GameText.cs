@@ -27,6 +27,13 @@ namespace bel_D20
             textLatest1 = txt;
             txtLog.WriteLine(txt);
         }
+        public static void Clear()
+        {
+            textLatest1 = "";
+            textLatest2 = "";
+            textLatest3 = "";
+            textLatest4 = "";
+        }
         public static string battleAction(string chrName)
         {
             string a = "What will " + chrName + " do?";
@@ -35,6 +42,11 @@ namespace bel_D20
         public static string HeroAtk(string chrName, string enemyName, int dmg)
         {
             string a = chrName + " attacks! " + enemyName + " takes " + dmg + " damage.";
+            return a;
+        }
+        public static string HeroHeal(string chrName, string chrName2, int dmg)
+        {
+            string a = $"{chrName} heals {chrName2}, recovering {dmg*-1} health.";
             return a;
         }
         public static string HeroMiss(string chrName, string enemyName)
@@ -52,6 +64,10 @@ namespace bel_D20
             string a = name + "\nHP - " + hp;
             return a;
         }
-        
+        public static string HeroStats(Player hero)
+        {
+            string a = $"{hero.name}\nHP: {hero.hitPoints}/{hero.maxHP}\n{hero.weapon.name}";
+            return a;
+        }
     }
 }

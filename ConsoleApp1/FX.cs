@@ -48,6 +48,16 @@ namespace bel_D20
             currentFrame = 0;
         }
     }
+    class Miss : FX
+    {
+        public Miss()
+        {
+            sprite = Sprites.miss;
+            color = Color.WHITE;
+            size = new Vector2(16, 16);
+            numFrames = 5;
+        }
+    }
     class Blunt : FX
     {
         public Blunt()
@@ -98,6 +108,37 @@ namespace bel_D20
         { 
             sprite = Sprites.magMis;
             color = new Color(155, 255, 205, 255);
+            size = new Vector2(64, 64);
+            numFrames = 10;
+        }
+    }
+    class AcArr : FX
+    {
+        public AcArr()
+        {
+            sprite = Sprites.pierce;
+            color = Color.LIME;
+            size = new Vector2(64, 64);
+            numFrames = 4;
+            numLines = 2;
+        }
+    }
+    class FlameSp : FX
+    {
+        public FlameSp()
+        {
+            sprite = Sprites.magMis;
+            color = Color.ORANGE;
+            size = new Vector2(64, 64);
+            numFrames = 10;
+        }
+    }
+    class Holy : FX
+    {
+        public Holy()
+        {
+            sprite = Sprites.blunt2;
+            color = Color.WHITE;
             size = new Vector2(64, 64);
             numFrames = 10;
         }

@@ -20,6 +20,8 @@ namespace bel_D20
         public int atkDmg;
         public Skill skill;
         public int skillChance;
+        public int killXP;
+        public int killGold;
         public FX hitFX;
         Rectangle infobox = new Rectangle(0, 0, 128, 48);
         Rectangle mouseArea;
@@ -64,6 +66,8 @@ namespace bel_D20
             name = "Goblin";
             sprite = Sprites.gobby;
             dColor = Color.LIME;//new Color(154,255,84,255);
+            killXP = 50;
+            killGold = 10;
             maxHP = 7;
             AC = 15;
             plusHit = 4;
@@ -92,6 +96,8 @@ namespace bel_D20
             name = "Hobgoblin Amazon";
             sprite = Sprites.hob2;
             dColor = Color.ORANGE;
+            killXP = 100;
+            killGold = 75;
             maxHP = 11;
             AC = 18;
             plusHit = 3;
@@ -106,6 +112,8 @@ namespace bel_D20
             name = "Orc Marauder";
             sprite = Sprites.orc;
             dColor = new Color(235, 236, 128, 255);
+            killXP = 100;
+            killGold = 75;
             maxHP = 15;
             AC = 13;
             plusHit = 5;
@@ -120,6 +128,8 @@ namespace bel_D20
             name = "Gnoll Barbarian";
             sprite = Sprites.barb;
             dColor = new Color(236, 211, 52, 255);
+            killXP = 100;
+            killGold = 75;
             maxHP = 22;
             AC = 15;
             plusHit = 4;
@@ -134,6 +144,8 @@ namespace bel_D20
             name = "Drow Archer";
             sprite = Sprites.drow;
             dColor = Color.DARKGRAY;
+            killXP = 50;
+            killGold = 60;
             maxHP = 13;
             AC = 15;
             plusHit = 4;
@@ -149,6 +161,8 @@ namespace bel_D20
             name = "Shambling Corpse";
             sprite = Sprites.zom;
             dColor = Color.BEIGE;
+            killXP = 50;
+            killGold = 5;
             maxHP = 22;
             AC = 8;
             plusHit = 3;
@@ -163,6 +177,8 @@ namespace bel_D20
             name = "Skeleton";
             sprite = Sprites.bones;
             dColor = Color.RAYWHITE;
+            killXP = 50;
+            killGold = 5;
             maxHP = 13;
             AC = 13;
             plusHit = 4;
@@ -177,6 +193,8 @@ namespace bel_D20
             name = "Vampire";
             sprite = Sprites.drac;
             dColor = new Color(213, 191, 255,255);
+            killXP = 1800;
+            killGold = 2000;
             maxHP = 82;
             AC = 15;
             plusHit = 6;
@@ -191,6 +209,8 @@ namespace bel_D20
             name = "Ghost";
             sprite = Sprites.boo;
             dColor = Color.SKYBLUE;
+            killXP = 1100;
+            killGold = 25;
             maxHP = 45;
             AC = 11;
             plusHit = 5;
@@ -205,6 +225,8 @@ namespace bel_D20
             name = "Mummy";
             sprite = Sprites.mummy;
             dColor = Color.BEIGE;
+            killXP = 700;
+            killGold = 5000;
             maxHP = 58;
             AC = 11;
             plusHit = 5;

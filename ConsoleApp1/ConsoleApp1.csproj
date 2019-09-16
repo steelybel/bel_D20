@@ -191,6 +191,9 @@
     <None Update="Resources\UI\Ancient\white_pressed.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\UI\UIpackSheet_transparent.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="textLog.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

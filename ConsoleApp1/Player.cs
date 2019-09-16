@@ -8,6 +8,8 @@ namespace bel_D20
 {
     class Player
     {
+        Rectangle mouseArea;
+        public bool selected;
         public Race pcRace;
         public Class pcClass;
         public int maxHP;
@@ -27,6 +29,9 @@ namespace bel_D20
         //public int die = pcClass.wepDie;
         public int AC = 10;
         public int wepLevel = 0;
+        public int level = 0;
+        public Weapon weapon;
+        public List<Skill> splList = new List<Skill>();
         public void StatInit()
         {
             score = pcClass.scores;
@@ -39,30 +44,42 @@ namespace bel_D20
             score[4] + pcRace.scoreMod[4],
             score[5] + pcRace.scoreMod[5]
             };
+            weapon = pcClass.initWeapon;
             maxHP = pcClass.baseHP + scoreMod(2);
             hitPoints = maxHP;
-        }
-        Rectangle skin
-        {
-            get
+            splList.Add(pcClass.skillz[0]);
+            foreach(Skill spl in splList)
             {
-                return pcRace.skin;
+                if (!spl.inf) { spl.UsesReset(); spl.UsesDisp(); }
             }
         }
-        Rectangle hair
+        public void StatUpd()
         {
-            get
+            score = pcClass.scores;
+            finScore = new int[6]
             {
-                return pcRace.hair;
+            score[0] + pcRace.scoreMod[0],
+            score[1] + pcRace.scoreMod[1],
+            score[2] + pcRace.scoreMod[2],
+            score[3] + pcRace.scoreMod[3],
+            score[4] + pcRace.scoreMod[4],
+            score[5] + pcRace.scoreMod[5]
+            };
+            maxHP = pcClass.baseHP + scoreMod(2);
+            foreach (Skill spl in splList)
+            {
+                if (!spl.inf) { spl.UsesReset(); }
             }
+            //hitPoints = maxHP;
+            //splList.Add(pcClass.skillz[level]);
         }
-        Rectangle hair2
+        public List<Item> inventory = new List<Item>()
         {
-            get
-            {
-                return pcRace.hair2;
-            }
-        }
+
+        };
+        Rectangle skin { get { return pcRace.skin; } }
+        Rectangle hair { get { return pcRace.hair; } }
+        Rectangle hair2{ get { return pcRace.hair2; } }
         Rectangle hat
         {
             get
@@ -102,21 +119,40 @@ namespace bel_D20
         {
             get
             {
-                return pcClass.wepf[wepLevel];
+                return weapon.spr;
             }
         }
         public void Draw(Texture2D spr, Vector2 pos)
         {
-            Vector2 posf = new Vector2(pos.x - 8, pos.y - 8);
-            rl.DrawTextureRec(spr,skin,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,bottom,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,shoe,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,top,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,hair2,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,hair,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,hat,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,shield,posf,Color.WHITE);
-            rl.DrawTextureRec(spr,wep,posf,Color.WHITE);
+            if (hitPoints <= 0)
+            {
+                Vector2 posf = new Vector2(pos.x - 16, pos.y - 16);
+                mouseArea = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
+                rl.DrawTextureRec(Sprites.tiles, Sprites.grave, posf, Color.WHITE);
+            }
+            else
+            {
+                Vector2 posf = new Vector2(pos.x - 8, pos.y - 8);
+                mouseArea = new Rectangle(pos.x - 8, pos.y - 8, 16, 16);
+                rl.DrawTextureRec(spr, skin, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, bottom, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, shoe, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, top, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, hair2, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, hair, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, hat, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, shield, posf, Color.WHITE);
+                rl.DrawTextureRec(spr, wep, posf, Color.WHITE);
+                if (rl.CheckCollisionPointRec(rl.GetMousePosition(), mouseArea))
+                {
+                    UI.MouseOver(UI.uiWhite2, GameText.HeroStats(this), UI.smallFont);
+                    selected = true;
+                }
+                else
+                {
+                    selected = false;
+                }
+            }
         }
     }
     class Race
@@ -225,12 +261,14 @@ namespace bel_D20
         public Rectangle shoe;
         public Rectangle shield;
         public List<Rectangle> wepf;// = new List<Rectangle>();
+        public Weapon initWeapon;
         //score
         public int baseHP;
         public int wepDie;
         public int[] scores = new int[6];
         public bool ranged = false;
         public FX hitFX;
+        public List<Skill> skillz;
     }
     class Barbarian : Class
     {
@@ -244,6 +282,11 @@ namespace bel_D20
             wepDie = Dice.d12(1);
             scores = new int[6] { 15, 12, 14, 8, 13, 10 };
             hitFX = new Blunt();
+            initWeapon = new Greataxe();
+            skillz = new List<Skill>()
+            {
+
+            };
         }
     }
     class Cleric : Class
@@ -260,6 +303,11 @@ namespace bel_D20
             wepDie = Dice.d6(1);
             scores = new int[6] { 12, 10, 13, 8, 15, 14 };
             hitFX = new Blunt();
+            initWeapon = new Mace();
+            skillz = new List<Skill>()
+            {
+                new Healing(),
+            };
         }
     }
     class Rogue : Class
@@ -274,6 +322,11 @@ namespace bel_D20
             wepDie = Dice.d8(1);
             scores = new int[6] { 14, 15, 8, 12, 10, 13 };
             hitFX = new Pierce();
+            initWeapon = new Shortsword();
+            skillz = new List<Skill>()
+            {
+                new Sneak(),
+            };
         }
     }
     class Fighter : Class
@@ -289,6 +342,11 @@ namespace bel_D20
             wepDie = Dice.d10(1);
             scores = new int[6] { 15, 14, 13, 8, 10, 12 };
             hitFX = new Slash();
+            initWeapon = new Longsword();
+            skillz = new List<Skill>()
+            {
+                new Crossbow(),
+            };
         }
     }
     class Wizard : Class
@@ -304,6 +362,12 @@ namespace bel_D20
             wepDie = Dice.d4(1);
             scores = new int[6] { 8, 12, 10, 15, 14, 13 };
             hitFX = new Blunt();
+            initWeapon = new Dagger();
+            skillz = new List<Skill>()
+            {
+                new MagMissile(),
+                new AcidArrow(),
+            };
         }
     }
     //premade chars
