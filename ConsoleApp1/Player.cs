@@ -143,15 +143,15 @@ namespace bel_D20
                 rl.DrawTextureRec(spr, hat, posf, Color.WHITE);
                 rl.DrawTextureRec(spr, shield, posf, Color.WHITE);
                 rl.DrawTextureRec(spr, wep, posf, Color.WHITE);
-                if (rl.CheckCollisionPointRec(rl.GetMousePosition(), mouseArea))
-                {
-                    UI.MouseOver(UI.uiWhite2, GameText.HeroStats(this), UI.smallFont);
-                    selected = true;
-                }
-                else
-                {
-                    selected = false;
-                }
+            }
+            if (rl.CheckCollisionPointRec(rl.GetMousePosition(), mouseArea))
+            {
+                UI.MouseOver(UI.uiWhite2, GameText.HeroStats(this), UI.smallFont);
+                selected = true;
+            }
+            else
+            {
+                selected = false;
             }
         }
     }

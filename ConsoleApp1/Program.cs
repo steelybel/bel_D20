@@ -25,6 +25,11 @@ namespace bel_D20
         public static Dice dice = new Dice();
         public static bool looping = true;
         public static int turn = 0;
+        public static int rTurn = 0;
+        public static int turnM = 0;
+        public static int rTurnM = 0;
+        public static List<int> battleOrder = new List<int>();
+        public static List<int> battleOrderM = new List<int>();
         public static int Main()
         {
             // Initialization
@@ -47,8 +52,6 @@ namespace bel_D20
             int partyXP = 0;
             bool splChoose = false;
             List<Monster> monsterList = new List<Monster>();
-            List<int> battleOrder = new List<int>();
-            int rTurn = 0;
             Rectangle mainText = new Rectangle(160, 0, 480, 96);
             Vector2 textPlace = new Vector2((screenWidth / 2), 48);
             Font curFont = UI.bigFont;
@@ -226,9 +229,13 @@ namespace bel_D20
             {
                 monsterList.Add(monstersLv1[m]);
             }
+            for (int h = 0; h < party.Length; h++)
+            {
+                party[h].StatInit();
+            }
             NewEncounter(monsters, monsterList, monsterPos);
             GameText.Clear();
-            GameText.SpitOut("Create your first hero.");
+            //GameText.SpitOut("Create your first hero.");
             Console.WriteLine("Finished initialization successfully");
             //--------------------------------------------------------------------------------------
 
@@ -288,7 +295,6 @@ namespace bel_D20
                                     genderStr = "F";
                                     break;
                             }
-                            //Console.WriteLine("Hey, are you alright? Did ya hit your head?");
                             if (skinButton.clicked)
                             {
                                 if (skinColor == 2) skinColor = 0;
@@ -355,7 +361,6 @@ namespace bel_D20
                         }
                         if (creating == 3)
                         {
-                            Console.WriteLine("Is this what's causing all the trouble?");
                             if (currentChar < party.Length)
                             {
                                 GameText.SpitOut($"You have created {party[currentChar].name}.Who is the next hero?");
@@ -392,23 +397,22 @@ namespace bel_D20
                     foreach (Player p in party) { p.StatInit(); }
                     initRolls = new int[4];
                     initOrder = new int[4];
-
+                    battleOrder.Clear();
                     for (int h = 0; h < 4; h++)
                     {
-                        //battleOrder.RemoveAt(h);
                         party[h].StatUpd();
                         initOrder[h] = h;
                         initRolls[h] = Dice.d20(1) + party[h].scoreMod(1);
                         Console.WriteLine($"{party[h].name} (party mem #{initOrder[h]}) rolled {initRolls[h]} for initiative!");
                     }
                     Array.Sort(initRolls, initOrder, revComp);
-                    foreach (int buh in initOrder) { battleOrder.Add(initRolls[buh]); }
+                    foreach (int buh in initOrder) { battleOrder.Add(initOrder[buh]); }
                     day++;
                     fights = 0;
                     fightReady = false;
                     inBattle = true;
+                    NewEncounter(monsters, monsterList, monsterPos);
                     rTurn = battleOrder[turn];
-                    NewEncounter(monsters,monsterList,monsterPos);
                 }
                 if (fights >= maxFights)
                 {
@@ -433,9 +437,9 @@ namespace bel_D20
                         {
                             choosing = false;
                             splChoose = true;
-                            for (int s = 0; s < party[turn].splList.Count; s++)
+                            for (int s = 0; s < party[rTurn].splList.Count; s++)
                             {
-                                Skill sp = party[turn].splList[s];
+                                Skill sp = party[rTurn].splList[s];
                                 splButtons[s] = new SkillButton(sp);
                             }
                         }
@@ -453,6 +457,7 @@ namespace bel_D20
                             {
                                 gold += monsters[h].killGold;
                                 partyXP += monsters[h].killXP;
+                                //battleOrderM.Remove(h);
                                 monsters[h] = new Monster();
                             }
                                 
@@ -462,43 +467,38 @@ namespace bel_D20
                     {
                         if (targets.Count > 0 && !skill.party)
                         {
-                            SkillUse(party[turn], monsters[targets.First()], monsterPos[targets.First()]);
+                            SkillUse(party[rTurn], monsters[targets.First()], monsterPos[targets.First()]);
                             targets.Remove(targets.First());
                         }
                         else if (targets.Count > 0)
                         {
-                            SkillHeal(party[turn], party[targets.First()], heroPos[targets.First()]);
+                            SkillHeal(party[rTurn], party[targets.First()], heroPos[targets.First()]);
                             targets.Remove(targets.First());
                         }
                         else
                         {
                             splReady = false;
                             monsterAtk = true;
-                            //if (turn == party.Length - 1) { turn = 0; }
-                            //else { turn += 1; }
-                            //if (Array.TrueForAll(monsters, element => element.hitPoints <= 0)) GameText.SpitOut(GameText.battleAction(party[turn].name));
-                            //choosing = true;
                         }
                     }
                     if (monsterAtk && !currentFX.active)
                     {
                         int which = rng.Next(party.Length);
-                        MonsterAttack(monsters[turn], party[which],heroPos[which]);
-                        if (turn == party.Length - 1) { turn = 0; }
-                        else { turn += 1; }
-                        if (Array.TrueForAll(monsters, element => element.hitPoints <= 0)) GameText.SpitOut(GameText.battleAction(party[turn].name));
+                        MonsterAttack(monsters[turnM], party[which],heroPos[which]);
+                        AdvanceTurn(battleOrder, battleOrderM);
+                        if (Array.TrueForAll(monsters, element => element.hitPoints <= 0)) GameText.SpitOut(GameText.battleAction(party[rTurn].name));
                         monsterAtk = false;
                         choosing = true;
                     }
                     if (splChoose && !currentFX.active) //CHOOSE SPELLS
                     {
-                        for (int s = 0; s < party[turn].splList.Count; s++)
+                        for (int s = 0; s < party[rTurn].splList.Count; s++)
                         {
-                            Skill sp = party[turn].splList[s];
+                            Skill sp = party[rTurn].splList[s];
                             if ((splButtons[s].fClicked && sp.UsesDisp() > 0) || (splButtons[s].fClicked && sp.inf))
                             {
-                                party[turn].splList[s].Use();
-                                Act_SPL(party,party[turn].splList[s]);
+                                party[rTurn].splList[s].Use();
+                                Act_SPL(party,party[rTurn].splList[s]);
                                 splChoose = false;
                             }
                         }
@@ -513,11 +513,9 @@ namespace bel_D20
                             {
                                 if (skill == null)
                                 {
-                                    Attack(party[turn], monsters[h], monsterPos[h]);
-                                    if (turn == party.Length - 1) { turn = 0; }
-                                    else { turn += 1; }
-                                    GameText.SpitOut(GameText.battleAction(party[turn].name));
-                                    choosing = true;
+                                    Attack(party[rTurn], monsters[h], monsterPos[h]);
+                                    //AdvanceTurn(battleOrder, battleOrderM);
+                                    monsterAtk = true;
                                     choice = false;
                                 }
                                 else if (!skill.party)
@@ -591,6 +589,7 @@ namespace bel_D20
                         if (inBattle) monsters[h].Draw(monsterPos[h]);
                     }
                 }
+                if (inBattle) { rl.DrawTextureRec(Sprites.tiles, Sprites.i_hand, heroPos[turn], Color.WHITE); }
                 if (starting)
                 {
                     if (creating == 0)
@@ -626,7 +625,7 @@ namespace bel_D20
                 }
                 //draw whose turn it is
                 //UI.Tile(0, 25, heroPos[turn]);
-                rl.DrawTextureRec(Sprites.tiles, Sprites.i_hand, heroPos[turn], Color.WHITE);
+                
 
                 //draw buttons
                 if (choosing && inBattle)
@@ -635,13 +634,13 @@ namespace bel_D20
                     {
                         encButtons[b].Draw(new Vector2(buttonPlaces[b], 384));
                     }
-                    encButtons[0].i = party[turn].weapon.icon;
+                    encButtons[0].i = party[rTurn].weapon.icon;
                 }
                 if (splChoose)
                 {
                     xOut.Draw(new Vector2(midWidth, screenHeight - 32));
                     if (xOut.clicked) { splChoose = false; choosing = true; }
-                    for (int s = 0; s < party[turn].splList.Count; s++)
+                    for (int s = 0; s < party[rTurn].splList.Count; s++)
                     {
                         splButtons[s].Draw(skillItemPos[s]);
                     }
@@ -809,12 +808,13 @@ namespace bel_D20
         }
         static void NewEncounter(Monster[] enc, List<Monster> list, Vector2[] pos)
         {
+            battleOrderM.Clear();
             for (int a = 0; a < enc.Length; a++)
             {
                 Monster newMon = list[rng.Next(0, list.Count)];
                 for (int b = 0; b < enc.Length;)
                 {
-                    while (newMon == enc[b])
+                    if (newMon == enc[b])
                     {
                         newMon = list[rng.Next(0, list.Count)];
                     }
@@ -822,7 +822,19 @@ namespace bel_D20
                 }
                 enc[a] = newMon;
                 newMon.Spawn(pos[a]);
+                if (newMon.maxHP > 0)
+                {
+                    battleOrderM.Add(a);
+                }
             }
+        }
+        static void AdvanceTurn(List<int> pl, List<int> mon)
+        {
+            rTurn = battleOrder[turn];
+            if (turn >= pl.Count - 1) { turn = 0; }
+            else { turn += 1; }
+            if (turnM >= mon.Count - 1) { turn = 0; }
+            else { turnM += 1; }
         }
     }
 
