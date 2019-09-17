@@ -12,9 +12,6 @@ the Seattle Campus of the Academy of Interactive Entertainment.
 This is written against .NET Core 2.0 and primarily supports Windows.
 Adjustments may be needed for other platforms.
 
-Asset Credits:
-[kenney]:https://www.kenney.nl/  - character sprites, environment tiles, UI, audio
-
 Check out Raylib here:
 [raylib]:https://github.com/raysan5/raylib
 [raysan]:https://github.com/raysan5
