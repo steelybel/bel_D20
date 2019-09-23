@@ -30,6 +30,7 @@ namespace bel_D20
         public static int rTurnM = 0;
         public static List<int> battleOrder = new List<int>();
         public static List<int> battleOrderM = new List<int>();
+        static char[] blank = new char[] { '\0' };
         public static int Main()
         {
             // Initialization
@@ -39,10 +40,10 @@ namespace bel_D20
             rl.InitWindow(screenWidth, screenHeight, "Dungeons!");
             rl.SetTargetFPS(60);
             Texture2D hero = rl.LoadTexture("Resources/Sprites/roguelikeChar_transparent.png");
-            bool starting = false;
+            bool starting = true;
             int creating = 0;
             bool inBattle = false;
-            bool fightReady = true;
+            bool fightReady = false;
             IComparer revComp = new ReverseComparer();
             int day = 0;
             int gold = 400;
@@ -63,10 +64,10 @@ namespace bel_D20
             //charcreation====================================================
             Button[] raceButtons = new Button[]
             {
-                new CButton(new I_Race(0,Color.WHITE), "Human", "A graceful race whose ties to magic run deep."),
+                new CButton(new I_Race(0,Color.WHITE), "Human", "An adaptable people who choose their own paths."),
                 new CButton(new I_Race(1,Color.WHITE), "Elf", "A graceful race whose ties to magic run deep."),
-                new CButton(new I_Race(2,Color.WHITE), "Dwarf", "A graceful race whose ties to magic run deep."),
-                new CButton(new I_Race(3,Color.WHITE), "Halfling", "A graceful race whose ties to magic run deep."),
+                new CButton(new I_Race(2,Color.WHITE), "Dwarf", "An industrious race with a bold demeanor."),
+                new CButton(new I_Race(3,Color.WHITE), "Halfling", "These small folk tend to avoid the dangers\nof the outside world."),
             };
             Button[] classButtons = new Button[]
             {
@@ -91,7 +92,7 @@ namespace bel_D20
                 {new Dwarf_m(0), new Dwarf_f(0) },
                 {new Human_m(0), new Human_f(0) },
             };
-            
+            Button presetButton = new CButton(null, "Use Presets", "Use a pre-made party.");
             bool gender = false;
             string genderStr = "";
             Button skinButton = new CButton(null, $"Skin: {skinString}", "Changes skin color.\nPurely cosmetic.");
@@ -250,9 +251,15 @@ namespace bel_D20
                 {
                     if (currentChar < party.Length)
                     {
-                        
+
                         if (creating == 0)
                         {
+                            if (presetButton.clicked)
+                            {
+                                PresetParty(party);
+                                starting = false;
+                                fightReady = true;
+                            }
                             switch (skinColor)
                             {
                                 case 0:
@@ -312,23 +319,25 @@ namespace bel_D20
                                     {
                                         pcRace = races[but, Convert.ToInt32(gender)]
                                     };
-                                    creating++;
                                     GameText.SpitOut($"You have chosen the race of {raceButtons[but].text}.");
                                     GameText.SpitOut($"Which class will this character be?");
+                                    creating++;
                                 }
                             }
                         }
                         if (creating == 1)
                         {
-                            for (int but = 0; but < classButtons.Length; but++)
+                            for (int cla = 0; cla < classButtons.Length; cla++)
                             {
-                                if (classButtons[but].clicked)
+                                if (classButtons[cla].clicked)
                                 {
-                                    party[currentChar].pcClass = classes[but];
-                                    creating++;
-                                    GameText.SpitOut($"You have chosen the class of {classButtons[but].text}.");
+                                    party[currentChar].pcClass = classes[cla];
+                                    GameText.SpitOut($"You have chosen the class of {classButtons[cla].text}.");
                                     GameText.SpitOut($"What will this hero's name be?");
                                     nameEntry = true;
+                                    letterCount = 0;
+                                    creating++;
+                                    classButtons[cla].clicked = false;
                                 }
                             }
                         }
@@ -350,12 +359,14 @@ namespace bel_D20
 
                                 name[letterCount] = '\0';
                             }
-                            if (rl.IsKeyPressed(KeyboardKey.KEY_ENTER))
+                            if (rl.IsKeyPressed(KeyboardKey.KEY_ENTER) || confirmButton.clicked)
                             {
-                                party[currentChar].name = new string(name);
+                                string butt = new string(name);
+                                party[currentChar].name = butt.Trim(blank);
                                 creating++;
                                 nameEntry = false;
                                 name = new char[maxChars];
+                                confirmButton.clicked = false;
                             }
                             blinkCounter++;
                         }
@@ -363,12 +374,19 @@ namespace bel_D20
                         {
                             if (currentChar < party.Length)
                             {
-                                GameText.SpitOut($"You have created {party[currentChar].name}.Who is the next hero?");
+                                GameText.SpitOut($"You have created {party[currentChar].name}.");
+                                GameText.SpitOut("Who is the next hero?");
                                 party[currentChar].StatInit();
                                 skinColor = 0;
                                 gender = false;
                                 currentChar++;
                                 if (currentChar < party.Length) creating = 0;
+                                else
+                                {
+                                    GameText.SpitOut($"Your party is now ready for an adventure.");
+                                    starting = false;
+                                    fightReady = true;
+                                }
                             }
                             else
                             {
@@ -594,6 +612,7 @@ namespace bel_D20
                 {
                     if (creating == 0)
                     {
+                        presetButton.Draw(new Vector2(midWidth, screenHeight - 48));
                         skinButton.text = $"Skin: {skinString}";
                         genderButton.text = $"Gender: {genderStr}";
                         skinButton.Draw(new Vector2(midWidth + 192, screenHeight - 48));
@@ -622,6 +641,7 @@ namespace bel_D20
                     {
                         rl.DrawTextEx(UI.bigFont, new string(name), new Vector2(nameBox.x + 4, nameBox.y + (nameBox.height / 2) - (rl.MeasureTextEx(UI.bigFont, new string(name), UI.bigFont.baseSize, 1f).y / 2)), UI.bigFont.baseSize, 1f, Color.BLACK);
                     }
+                    confirmButton.Draw(new Vector2(midWidth, screenHeight - 64));
                 }
                 //draw whose turn it is
                 //UI.Tile(0, 25, heroPos[turn]);
@@ -808,18 +828,12 @@ namespace bel_D20
         }
         static void NewEncounter(Monster[] enc, List<Monster> list, Vector2[] pos)
         {
+            List<Monster> dupCheck = list;
             battleOrderM.Clear();
             for (int a = 0; a < enc.Length; a++)
             {
-                Monster newMon = list[rng.Next(0, list.Count)];
-                for (int b = 0; b < enc.Length;)
-                {
-                    if (newMon == enc[b])
-                    {
-                        newMon = list[rng.Next(0, list.Count)];
-                    }
-                    b++;
-                }
+                Monster newMon = dupCheck[rng.Next(0, dupCheck.Count)];
+                dupCheck.Remove(newMon);
                 enc[a] = newMon;
                 newMon.Spawn(pos[a]);
                 if (newMon.maxHP > 0)
@@ -835,6 +849,13 @@ namespace bel_D20
             else { turn += 1; }
             if (turnM >= mon.Count - 1) { turn = 0; }
             else { turnM += 1; }
+        }
+        static void PresetParty(Player[] p)
+        {
+            p[0] = new Premade1();
+            p[1] = new Premade2();
+            p[2] = new Premade3();
+            p[3] = new Premade4();
         }
     }
 

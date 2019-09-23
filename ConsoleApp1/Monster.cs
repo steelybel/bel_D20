@@ -75,6 +75,22 @@ namespace bel_D20
             hitFX = new Slash();
         }
     }
+    class Kobold : Monster
+    {
+        public Kobold()
+        {
+            name = "Kobold";
+            sprite = Sprites.kobby;
+            dColor = Color.RED;//new Color(154,255,84,255);
+            killXP = 50;
+            killGold = 10;
+            maxHP = 7;
+            AC = 15;
+            plusHit = 4;
+            atkDmg = (Dice.d6(1) + 2);
+            hitFX = new Slash();
+        }
+    }
     class Hobgoblin_m : Monster
     {
         public Hobgoblin_m()

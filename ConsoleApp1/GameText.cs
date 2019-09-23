@@ -41,7 +41,7 @@ namespace bel_D20
         }
         public static string HeroAtk(string chrName, string enemyName, int dmg)
         {
-            string a = chrName + " attacks! " + enemyName + " takes " + dmg + " damage.";
+            string a = $"{chrName} attacks! {enemyName} takes {dmg} damage.";
             return a;
         }
         public static string HeroHeal(string chrName, string chrName2, int dmg)
@@ -51,7 +51,8 @@ namespace bel_D20
         }
         public static string HeroMiss(string chrName, string enemyName)
         {
-            string a = chrName + " attempts to attack " + enemyName + ", but fails.";
+            string a = $"{chrName} attempts to attack {enemyName}, but fails.";
+
             return a;
         }
         public static string EnemyEntry(string name)
