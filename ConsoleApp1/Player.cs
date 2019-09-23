@@ -37,45 +37,75 @@ namespace bel_D20
             score = pcClass.scores;
             finScore = new int[6]
             {
-            score[0] + pcRace.scoreMod[0],
-            score[1] + pcRace.scoreMod[1],
-            score[2] + pcRace.scoreMod[2],
-            score[3] + pcRace.scoreMod[3],
-            score[4] + pcRace.scoreMod[4],
-            score[5] + pcRace.scoreMod[5]
+            score[0] + pcRace.scoreMod[0] + level,
+            score[1] + pcRace.scoreMod[1] + level,
+            score[2] + pcRace.scoreMod[2] + level,
+            score[3] + pcRace.scoreMod[3] + level,
+            score[4] + pcRace.scoreMod[4] + level,
+            score[5] + pcRace.scoreMod[5] + level
             };
+            if (pcClass.armor > 0)
+            {
+                if (pcClass.armorType < 2) { AC = pcClass.armor + scoreMod(2); }
+                else { AC = pcClass.armor; }
+            }
+            else
+            {
+                AC = 10 + scoreMod(2);
+            }
             weapon = pcClass.initWeapon;
             maxHP = pcClass.baseHP + scoreMod(2);
             hitPoints = maxHP;
-            splList.Add(pcClass.skillz[0]);
+            splList.Clear();
+            for (int l = 0; l < Math.Clamp(level+1,1,pcClass.skillz.Count); l++)
+            {
+                splList.Add(pcClass.skillz[l]);
+            }
             foreach(Skill spl in splList)
             {
                 if (!spl.inf) { spl.UsesReset(); spl.UsesDisp(); }
             }
+        }
+        public void LevUp()
+        {
+            int newHP = pcClass.hitDie + scoreMod(2);
+            maxHP += newHP;
         }
         public void StatUpd()
         {
             score = pcClass.scores;
             finScore = new int[6]
             {
-            score[0] + pcRace.scoreMod[0],
-            score[1] + pcRace.scoreMod[1],
-            score[2] + pcRace.scoreMod[2],
-            score[3] + pcRace.scoreMod[3],
-            score[4] + pcRace.scoreMod[4],
-            score[5] + pcRace.scoreMod[5]
+            score[0] + pcRace.scoreMod[0] + level,
+            score[1] + pcRace.scoreMod[1] + level,
+            score[2] + pcRace.scoreMod[2] + level,
+            score[3] + pcRace.scoreMod[3] + level,
+            score[4] + pcRace.scoreMod[4] + level,
+            score[5] + pcRace.scoreMod[5] + level
             };
-            maxHP = pcClass.baseHP + scoreMod(2);
+            hitPoints = maxHP;
+            if (pcClass.armor > 0)
+            {
+                if (pcClass.armorType < 2) { AC = pcClass.armor + scoreMod(2); }
+                else { AC = pcClass.armor; }
+            }
+            else
+            {
+                AC = 10 + scoreMod(2);
+            }
+            splList.Clear();
+            for (int l = 0; l < Math.Clamp(level + 1, 1, pcClass.skillz.Count); l++)
+            {
+                splList.Add(pcClass.skillz[l]);
+            }
             foreach (Skill spl in splList)
             {
                 if (!spl.inf) { spl.UsesReset(); }
             }
-            //hitPoints = maxHP;
-            //splList.Add(pcClass.skillz[level]);
         }
         public List<Item> inventory = new List<Item>()
         {
-
+            new Potion1(),
         };
         Rectangle skin { get { return pcRace.skin; } }
         Rectangle hair { get { return pcRace.hair; } }
@@ -235,9 +265,9 @@ namespace bel_D20
     {
         public Hobbit_m(int skinColor)
         {
-            if (skinColor == 0) skin = Sprites.skin1; hair = new Rectangle(426, 34, 16, 16);
-            if (skinColor == 1) skin = Sprites.skin2; hair = new Rectangle(358, 34, 16, 16);
-            if (skinColor == 2) skin = Sprites.skin3; hair = new Rectangle(426, 102, 16, 16);
+            if (skinColor == 0) { skin = Sprites.skin1; hair = new Rectangle(426, 34, 16, 16); }
+            if (skinColor == 1) { skin = Sprites.skin2; hair = new Rectangle(358, 34, 16, 16); }
+            if (skinColor == 2) { skin = Sprites.skin3; hair = new Rectangle(426, 102, 16, 16); }
             scoreMod = new int[6] { 0, 2, 0, 0, 0, 1 };
         }
     }
@@ -265,6 +295,9 @@ namespace bel_D20
         //score
         public int baseHP;
         public int wepDie;
+        public int hitDie;
+        public int armor;
+        public int armorType;
         public int[] scores = new int[6];
         public bool ranged = false;
         public FX hitFX;
@@ -301,6 +334,9 @@ namespace bel_D20
             wepf = Sprites.mace;
             baseHP = 8;
             wepDie = Dice.d6(1);
+            hitDie = Dice.d8(1);
+            armor = 13;
+            armorType = 1;
             scores = new int[6] { 12, 10, 13, 8, 15, 14 };
             hitFX = new Blunt();
             initWeapon = new Mace();
@@ -320,6 +356,9 @@ namespace bel_D20
             wepf = Sprites.knife;
             baseHP = 8;
             wepDie = Dice.d8(1);
+            hitDie = Dice.d8(1);
+            armor = 11;
+            armorType = 0;
             scores = new int[6] { 14, 15, 8, 12, 10, 13 };
             hitFX = new Pierce();
             initWeapon = new Shortsword();
@@ -340,6 +379,9 @@ namespace bel_D20
             wepf = Sprites.sword;
             baseHP = 10;
             wepDie = Dice.d10(1);
+            hitDie = Dice.d10(1);
+            armor = 16;
+            armorType = 2;
             scores = new int[6] { 15, 14, 13, 8, 10, 12 };
             hitFX = new Slash();
             initWeapon = new Longsword();
@@ -360,6 +402,7 @@ namespace bel_D20
             wepf = Sprites.staff;
             baseHP = 6;
             wepDie = Dice.d4(1);
+            hitDie = Dice.d6(1);
             scores = new int[6] { 8, 12, 10, 15, 14, 13 };
             hitFX = new Blunt();
             initWeapon = new Dagger();

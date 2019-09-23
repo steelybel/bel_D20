@@ -15,7 +15,9 @@ namespace bel_D20
         public ItemType type = ItemType.Consume;
         public Icon icon;
         public bool party = true;
-        public int effect;
+        public int[] die = new int[2] { 0, 0 };
+        public int add = 0;
+        public FX fx = new Holy();
         void Use()
         {
 
@@ -26,10 +28,73 @@ namespace bel_D20
     {
         public Potion1()
         {
-            name = "Small Potion of Healing";
+            name = "Potion of Healing";
             icon = new I_Potion(0,Color.PINK);
-            cost = 25;
+            flavor = "Heals 2d4 + 2 health.";
+            cost = 50;
+            die = new int[2] { 2, 4 };
+            add = 2;
+        }
+    }
+    class Potion2 : Item
+    {
+        public Potion2()
+        {
+            name = "Potion of Greater Healing";
+            icon = new I_Potion(1, Color.PINK);
+            flavor = "Heals 4d4 + 4 health.";
+            cost = 250;
+            die = new int[2] { 4, 4 };
+            add = 4;
+        }
+    }
+    class Potion3 : Item
+    {
+        public Potion3()
+        {
+            name = "Potion of Superior Healing";
+            icon = new I_Potion(6, Color.PINK);
+            flavor = "Heals 8d4 + 8 health.";
+            cost = 2500;
+            die = new int[2] { 8, 4 };
+            add = 8;
+        }
+    }
+    class Potion4 : Item
+    {
+        public Potion4()
+        {
+            name = "Potion of Supreme Healing";
+            icon = new I_Potion(7, Color.PINK);
+            flavor = "Heals 10d4 + 20 health.";
+            cost = 25000;
+            die = new int[2] { 10, 4 };
+            add = 20;
+        }
+    }
 
+    class ThrowKnife : Item
+    {
+        public ThrowKnife()
+        {
+            name = "Throwing Dagger";
+            icon = new I_Ranged(2, Color.RAYWHITE);
+            cost = 50;
+            party = false;
+            die = new int[2] { 1, 4 };
+            add = 0;
+            fx = new Pierce();
+        }
+    }
+    class Bomb : Item
+    {
+        public Bomb()
+        {
+            name = "Bomb";
+            icon = new I_Ranged_2(1, Color.RAYWHITE);
+            cost = 150;
+            party = false;
+            die = new int[2] { 3, 6 };
         }
     }
     class Weapon
@@ -41,8 +106,9 @@ namespace bel_D20
         public Icon icon = new Icon();
         public Rectangle spr = new Rectangle();
         public FX hitFX;
-        public int die;
+        public int[] die = new int[2];
         public int dmgType;
+        public int bonus = 0;
         public bool ranged = false;
         public bool twoHand = false;
     }
@@ -55,7 +121,7 @@ namespace bel_D20
             cost = 2;
             icon = new I_Dagger(Color.RAYWHITE);
             spr = Sprites.knife2;
-            die = Dice.d4(1);
+            die = new int[2] { 1, 4 };
             hitFX = new Pierce();
             dmgType = (int)DamageType.Piercing;
         }
@@ -69,7 +135,7 @@ namespace bel_D20
             cost = 10;
             icon = new I_Sword(0,Color.RAYWHITE);
             spr = Sprites.sword2;
-            die = Dice.d6(1);
+            die = new int[2] { 1, 6 };
             hitFX = new Pierce();
             dmgType = (int)DamageType.Piercing;
         }
@@ -81,9 +147,9 @@ namespace bel_D20
             name = "Longsword";
             flavor = "A well-rounded blade for any fighter.\n1d8 slashing damage.";
             cost = 15;
-            icon = new I_Sword(0,Color.RAYWHITE);
+            icon = new I_Sword(2,Color.RAYWHITE);
             spr = Sprites.sword2;
-            die = Dice.d8(1);
+            die = new int[2] { 1, 8 };
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
         }
@@ -95,12 +161,26 @@ namespace bel_D20
             name = "Longsword";
             flavor = "A massive & mighty blade.\n2d6 slashing damage.";
             cost = 50;
-            icon = new I_Sword(0,Color.RAYWHITE);
+            icon = new I_Sword(3, Color.RAYWHITE);
             spr = Sprites.sword2;
-            die = Dice.d6(2);
+            die = new int[2] { 2, 6 };
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
             twoHand = true;
+        }
+    }
+    class Staff : Weapon
+    {
+        public Staff()
+        {
+            name = "Quarterstaff";
+            flavor = "A wooden staff made for combat.\n1d4 blunt damage.";
+            cost = 1;
+            icon = new I_Rod(2, Color.RAYWHITE);
+            spr = Sprites.mace1;
+            die = new int[2] { 1, 6 };
+            hitFX = new Blunt();
+            dmgType = (int)DamageType.Blunt;
         }
     }
     class Mace : Weapon
@@ -112,7 +192,7 @@ namespace bel_D20
             cost = 5;
             icon = new I_Rod(0,Color.RAYWHITE);
             spr = Sprites.mace1;
-            die = Dice.d6(1);
+            die = new int[2] { 1, 6 };
             hitFX = new Blunt();
             dmgType = (int)DamageType.Blunt;
         }
@@ -122,11 +202,11 @@ namespace bel_D20
         public Handaxe()
         {
             name = "Handaxe";
-            flavor = "";
+            flavor = "A survival tool fashioned into a weapon.\n1d6 slashing damage.";
             cost = 5;
             icon = new I_Axe(0, Color.RAYWHITE);
             spr = Sprites.axe1;
-            die = Dice.d6(1);
+            die = new int[2] { 1, 6 };
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
         }
@@ -136,11 +216,11 @@ namespace bel_D20
         public Battleaxe()
         {
             name = "Battleaxe";
-            flavor = "";
+            flavor = "A proper warrior's axe.\n1d8 slashing damage.";
             cost = 10;
-            icon = new I_Axe(0, Color.RAYWHITE);
+            icon = new I_Axe(3, Color.RAYWHITE);
             spr = Sprites.axe2;
-            die = Dice.d6(1);
+            die = new int[2] { 1, 8 };
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
         }
@@ -150,14 +230,44 @@ namespace bel_D20
         public Greataxe()
         {
             name = "Greataxe";
-            flavor = "";
+            flavor = "An axe for those with superior strength.\n1d12 slashing damage.";
             cost = 30;
-            icon = new I_Axe(0, Color.RAYWHITE);
+            icon = new I_Axe(7, Color.RAYWHITE);
             spr = Sprites.axe3;
-            die = Dice.d12(1);
+            die = new int[2] { 1, 12 };
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
             twoHand = true;
+        }
+    }
+    class Shortbow : Weapon
+    {
+        public Shortbow()
+        {
+            name = "Shortbow";
+            flavor = "A lightweight bow often used on horseback.\n1d6 piercing damage.";
+            cost = 25;
+            icon = new I_Ranged(3, Color.RAYWHITE);
+            spr = Sprites.bow1;
+            die = new int[2] { 1, 6 };
+            ranged = true;
+            hitFX = new Pierce();
+            dmgType = (int)DamageType.Piercing;
+        }
+    }
+    class Longbow : Weapon
+    {
+        public Longbow()
+        {
+            name = "Longbow";
+            flavor = "A heavy bow used by infantrymen.\n1d8 piercing damage.";
+            cost = 50;
+            icon = new I_Ranged(3, Color.RAYWHITE);
+            spr = Sprites.bow2;
+            die = new int[2] { 1, 8 };
+            ranged = true;
+            hitFX = new Pierce();
+            dmgType = (int)DamageType.Piercing;
         }
     }
 }

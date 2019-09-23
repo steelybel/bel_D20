@@ -140,7 +140,18 @@ namespace bel_D20
             sprite = Sprites.blunt2;
             color = Color.WHITE;
             size = new Vector2(64, 64);
-            numFrames = 10;
+            numFrames = 5;
+        }
+    }
+    class Explode : FX
+    {
+        public Explode()
+        {
+            sprite = Sprites.splash;
+            color = Color.ORANGE;
+            size = new Vector2(64, 64);
+            numFrames = 4;
+            numLines = 2;
         }
     }
 }

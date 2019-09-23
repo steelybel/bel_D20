@@ -55,6 +55,11 @@ namespace bel_D20
 
             return a;
         }
+        public static string WeaponShow(Player chara)
+        {
+            string a = $"Attack one enemy with your\nequipped weapon.\nEquipped: {chara.weapon.name}";
+            return a;
+        }
         public static string EnemyEntry(string name)
         {
             string a = name + " approaches!";
@@ -67,7 +72,14 @@ namespace bel_D20
         }
         public static string HeroStats(Player hero)
         {
-            string a = $"{hero.name}\nHP: {hero.hitPoints}/{hero.maxHP}\n{hero.weapon.name}";
+            string a = $"{hero.name}\nHP {hero.hitPoints}/{hero.maxHP} AC {hero.AC}" +
+                $"\nSTR {hero.finScore[0]} ({hero.scoreMod(0)})" +
+                $"\nDEX {hero.finScore[1]} ({hero.scoreMod(1)})" +
+                $"\nCON {hero.finScore[2]} ({hero.scoreMod(2)})" +
+                $"\nINT {hero.finScore[3]} ({hero.scoreMod(3)})" +
+                $"\nWIS {hero.finScore[4]} ({hero.scoreMod(4)})" +
+                $"\nCHA {hero.finScore[5]} ({hero.scoreMod(5)})" +
+                $"";
             return a;
         }
     }

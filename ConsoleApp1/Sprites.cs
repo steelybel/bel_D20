@@ -65,7 +65,7 @@ namespace bel_D20
         public static Rectangle axe3 = new Rectangle(868, 0, 16, 16);
         public static Rectangle axe4 = new Rectangle(800, 153, 16, 16);
         public static Rectangle bow1 = new Rectangle(885, 0, 16, 16);
-        public static Rectangle bow2 = new Rectangle(902, 34, 16, 16);
+        public static Rectangle bow2 = new Rectangle(885, 17, 16, 16);
         public static Rectangle bow3 = new Rectangle(902, 17, 16, 16);
         public static Rectangle bow4 = new Rectangle(902, 68, 16, 16);
         public static List<Rectangle> knife = new List<Rectangle> { knife1, knife2, knife3, knife4 };
@@ -81,6 +81,7 @@ namespace bel_D20
         public static Rectangle i_item = new Rectangle(224, 160, 32, 32);
         public static Rectangle i_flee = new Rectangle(192, 32, 32, 32);
         public static Rectangle i_hand = new Rectangle(0, 736, 16, 16);
+        public static Rectangle i_skull = new Rectangle(192, 736, 16, 16);
         public static Rectangle[] i_race = new Rectangle[4]
         {
             new Rectangle(64,576,32,32),//human
@@ -149,6 +150,17 @@ namespace bel_D20
             new Rectangle(192, 288, 32, 32),
             new Rectangle(224, 288, 32, 32),
         };
+        public static Rectangle[] i_range2 = new Rectangle[8]
+        {
+            new Rectangle(0, 320, 32, 32),
+            new Rectangle(32, 320, 32, 32),
+            new Rectangle(64, 320, 32, 32),
+            new Rectangle(96, 320, 32, 32),
+            new Rectangle(128, 320, 32, 32),
+            new Rectangle(160, 320, 32, 32),
+            new Rectangle(192, 320, 32, 32),
+            new Rectangle(224, 320, 32, 32),
+        };
         public static Rectangle[] i_armor = new Rectangle[8]
         {
             new Rectangle(0, 352, 32, 32),
@@ -205,6 +217,7 @@ namespace bel_D20
         public static Texture2D blunt = rl.LoadTexture("Resources/FX/break01.png");
         public static Texture2D blunt2 = rl.LoadTexture("Resources/FX/shards01.png");
         public static Texture2D slash = rl.LoadTexture("Resources/FX/hit01.png");
+        public static Texture2D splash = rl.LoadTexture("Resources/FX/splash01.png");
         public static Texture2D pierce = rl.LoadTexture("Resources/FX/shards02.png");
     }
     class Icon
@@ -257,12 +270,21 @@ namespace bel_D20
             color = col;
         }
     }
+    class I_Ranged_2 : Icon
+    {
+        public I_Ranged_2(int num, Color col)
+        {
+            if (num > Sprites.i_range2.Length) { num = 0; }
+            spr = Sprites.i_range2[num];
+            color = col;
+        }
+    }
     class I_Potion : Icon
     {
         public I_Potion(int num, Color col)
         {
-            if (num > Sprites.i_swords.Length) { num = 0; }
-            spr = Sprites.i_swords[num];
+            if (num > Sprites.i_potion.Length) { num = 0; }
+            spr = Sprites.i_potion[num];
             color = col;
         }
     }

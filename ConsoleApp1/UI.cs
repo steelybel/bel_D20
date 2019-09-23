@@ -82,7 +82,7 @@ namespace bel_D20
     class Button
     {
         public Icon i;
-        public static Rectangle size = new Rectangle(0, 0, 128, 40);
+        public static Rectangle size = new Rectangle(0, 0, 144, 40);
         public string text;
         public string flavor;
         //public Texture2D uiTex = new Texture2D();
@@ -114,11 +114,15 @@ namespace bel_D20
             {
                 Vector2 sprLoc = new Vector2(v2.x - (size.width / 2) + 4, v2.y - (size.height / 2) + 4);
                 rl.DrawTextureRec(Sprites.tiles, i.spr, sprLoc, i.color);
-                rl.DrawTextEx(font, text, new Vector2(v2.x - (size.width / 2) + i.spr.width + 8, v2.y - (textSize.y / 2)), font.baseSize, 1f, fontColor);
+                Rectangle whereText = new Rectangle(sprLoc.x + i.spr.width + 4, v2.y - (size.y / 2) - 12, size.width - i.spr.width - 8, 40);
+                //rl.DrawTextEx(font, text, new Vector2(v2.x - (size.width / 2) + i.spr.width + 8, v2.y - (textSize.y / 2)), font.baseSize, 1f, fontColor);
+                rl.DrawTextRec(font, text, whereText, font.baseSize, 1f, true, fontColor);
             }
             else
             {
-                rl.DrawTextEx(font, text, new Vector2(v2.x - (size.width / 2) + 8, v2.y - (textSize.y / 2)), font.baseSize, 1f, fontColor);
+                //rl.DrawTextEx(font, text, new Vector2(v2.x - (size.width / 2) + 8, v2.y - (textSize.y / 2)), font.baseSize, 1f, fontColor);
+                Rectangle whereText = new Rectangle(v2.x - (size.width / 2) + 4, v2.y - (size.y / 2) - 8, size.width - 4, 40);
+                rl.DrawTextRec(font, text, whereText, font.baseSize, 1f, true, fontColor);
             }
             if (mouseOver && flavor != null) { UI.MouseOver(UI.uiWhite2, flavor, UI.smallFont); }
         }
@@ -205,9 +209,21 @@ namespace bel_D20
             //uiTex = UI.uiTan;
             //uiTexClick = UI.uiTan2;
             if (spl.inf) { text = $"{spl.name}"; }
-            else { text = $"{spl.name}\n{spl.UsesDisp()}/{spl.uses}"; }
-            
-            flavor = spl.flavor;
+            else { text = $"{spl.name}"; }
+            string usesCheck = (spl.inf) ? "" : $"\nUses: {spl.UsesDisp()}/{spl.uses}";
+            flavor = spl.flavor + usesCheck;
+            font = UI.smallFont;
+        }
+    }
+    class ItemButton : Button
+    {
+        public ItemButton(Item itm)
+        {
+            i = itm.icon;
+            //uiTex = UI.uiTan;
+            //uiTexClick = UI.uiTan2;
+            text = itm.name;
+            flavor = itm.flavor;
             font = UI.smallFont;
         }
     }
@@ -218,9 +234,10 @@ namespace bel_D20
         public bool clicked = false;
         public void Draw(Vector2 a)
         {
-            UI.Tile(21, 6, a);
-            Rectangle buh = new Rectangle(a.x - (size.x / 2), a.y - (size.y / 2), size.x, size.y);
-            if (rl.CheckCollisionPointRec(rl.GetMousePosition(), buh) && rl.IsMouseButtonDown(0)) { clicked = true; }
+            Vector2 realPos = new Vector2(a.x - (size.x / 2), a.y - (size.y / 2));
+            UI.Tile(21, 6, realPos);
+            Rectangle buh = new Rectangle(realPos.x, realPos.y, size.x, size.y);
+            if (rl.CheckCollisionPointRec(rl.GetMousePosition(), buh) && rl.IsMouseButtonPressed(0)) { clicked = true; }
             else { clicked = false; }
         }
     }

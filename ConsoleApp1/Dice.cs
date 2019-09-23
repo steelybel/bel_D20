@@ -12,6 +12,15 @@ namespace bel_D20
     {
         static Random rng = new Random();
         static Random fallBack = new Random();
+        public static int Die(int numDice, int sides)
+        {
+            int d = 0;
+            for (int i = 0; i < numDice; i++)
+            {
+                d += rng.Next(1, sides + 1);
+            }
+            return d;
+        }
         public static int d20 (int numDice)
         {
             int d = 0;
@@ -35,7 +44,7 @@ namespace bel_D20
             int d = 0;
             for (int i = 0; i < numDice; i++)
             {
-                d += rl.GetRandomValue(1, 12);
+                d += rng.Next(1, 13);
             }
             return d;
         }
@@ -44,7 +53,7 @@ namespace bel_D20
             int d = 0;
             for (int i = 0; i < numDice; i++)
             {
-                d += rl.GetRandomValue(1, 10);
+                d += rng.Next(1, 11);
             }
             return d;
         }
@@ -53,7 +62,7 @@ namespace bel_D20
             int d = 0;
             for (int i = 0; i < numDice; i++)
             {
-                d += rl.GetRandomValue(1, 8);
+                d += rng.Next(1, 9);
             }
             return d;
         }
@@ -62,7 +71,7 @@ namespace bel_D20
             int d = 0;
             for (int i = 0; i < numDice; i++)
             {
-                d += rl.GetRandomValue(1, 6);
+                d += rng.Next(1, 7);
             }
             return d;
         }
@@ -71,7 +80,7 @@ namespace bel_D20
             int d = 0;
             for (int i = 0; i < numDice; i++)
             {
-                d += rl.GetRandomValue(1, 4);
+                d += rng.Next(1, 5);
             }
             return d;
         }

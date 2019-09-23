@@ -81,7 +81,7 @@ namespace bel_D20
         {
             name = "Kobold";
             sprite = Sprites.kobby;
-            dColor = Color.RED;//new Color(154,255,84,255);
+            dColor = Color.ORANGE;//new Color(154,255,84,255);
             killXP = 50;
             killGold = 10;
             maxHP = 7;

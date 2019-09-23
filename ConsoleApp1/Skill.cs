@@ -13,7 +13,8 @@ namespace bel_D20
         public bool party = false;
         public enum TargetType { Single, Whole, Self };
         public int trgType = 0;
-        public int dmg = 0;
+        //public int dmg = 0;
+        public int[] die = new int[2] { 0, 0 };
         public int addDmg = 0;
         public bool wepSpl = false;
         //public int scoreMod;
@@ -50,7 +51,8 @@ namespace bel_D20
             icon = new I_Ranged(7, Color.BEIGE);
             name = "Heavy Crossbow";
             hitFX = new Pierce();
-            dmg = Dice.d8(1);
+            die = new int[2] { 1, 8 };
+            //dmg = Dice.d8(1);
             addDmg = 5;
             alwaysHit = true;
             flavor = "Fire a crossbow at one enemy.";
@@ -65,7 +67,8 @@ namespace bel_D20
             icon = new IconSpell(3, new Color(155, 255, 205, 255));
             name = "Magic Missile";
             hitFX = new MagMis();
-            dmg = Dice.d4(1);
+            die = new int[2] { 1, 4 };
+            //dmg = Dice.d4(1);
             addDmg = 1;
             numTimes = 3;
             alwaysHit = true;
@@ -80,7 +83,8 @@ namespace bel_D20
             icon = new IconSpell(3, Color.ORANGE);
             name = "Acid Arrow";
             hitFX = new AcArr();
-            dmg = Dice.d6(2);
+            die = new int[2] { 2, 6 };
+            //dmg = Dice.d6(2);
             addDmg = 0;
             alwaysHit = true;
             flavor = "Create a sphere of fire directed at one enemy.";
@@ -97,7 +101,8 @@ namespace bel_D20
             hitFX = new Holy();
             party = true;
             alwaysHit = true;
-            dmg = (Dice.d4(1));
+            die = new int[2] { 1, 4 };
+            //dmg = (Dice.d4(1));
             inf = true;
         }
     }
@@ -110,7 +115,8 @@ namespace bel_D20
             name = "Sneak Attack";
             hitFX = new Pierce();
             wepSpl = true;
-            dmg = Dice.d6(1);
+            die = new int[2] { 1, 6 };
+            //dmg = Dice.d6(1);
             inf = true;
         }
     }
