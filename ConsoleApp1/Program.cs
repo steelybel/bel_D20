@@ -278,7 +278,7 @@ namespace bel_D20
                 new Potion1(),
                 new Potion1(),
                 new Potion2(),
-                new ThrowKnife(),
+                new ThrowKnife(5),
             };
             List<Weapon> randomWeps = new List<Weapon>
             {

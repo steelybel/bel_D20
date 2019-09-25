@@ -23,6 +23,7 @@ namespace bel_D20
         public static Rectangle topRog = new Rectangle(239, 85, 16, 16);
         public static Rectangle topWiz = new Rectangle(120, 119, 16, 16);
         public static Rectangle topBrb = new Rectangle(222, 119, 16, 16);
+        public static Rectangle topRng = new Rectangle(137, 68, 16, 16);
         public static Rectangle hatClr = new Rectangle(222, 68, 16, 16);
         public static Rectangle hatWiz = new Rectangle(528, 136, 16, 16);
         public static Rectangle hatWar = new Rectangle(477, 102, 16, 16);
@@ -48,6 +49,7 @@ namespace bel_D20
         public static Rectangle sword2 = new Rectangle(749, 102, 16, 16);
         public static Rectangle sword3 = new Rectangle(766, 102, 16, 16);
         public static Rectangle sword4 = new Rectangle(783, 102, 16, 16);
+        public static Rectangle scim = new Rectangle(749, 135, 16, 16);
         public static Rectangle knife1 = new Rectangle(732, 119, 16, 16);
         public static Rectangle knife2 = new Rectangle(749, 119, 16, 16);
         public static Rectangle knife3 = new Rectangle(766, 119, 16, 16);
@@ -56,10 +58,15 @@ namespace bel_D20
         public static Rectangle mace2 = new Rectangle(800, 68, 16, 16);
         public static Rectangle mace3 = new Rectangle(800, 102, 16, 16);
         public static Rectangle mace4 = new Rectangle(800, 136, 16, 16);
+        public static Rectangle flail1 = new Rectangle(817, 0, 16, 16);
+        public static Rectangle flail2 = new Rectangle(817, 68, 16, 16);
+        public static Rectangle flail3 = new Rectangle(817, 102, 16, 16);
+        public static Rectangle flail4 = new Rectangle(817, 136, 16, 16);
         public static Rectangle staff1 = new Rectangle(715, 0, 16, 16);
         public static Rectangle staff2 = new Rectangle(715, 51, 16, 16);
         public static Rectangle staff3 = new Rectangle(715, 17, 16, 16);
         public static Rectangle staff4 = new Rectangle(715, 34, 16, 16);
+        public static Rectangle spear1 = new Rectangle(834, 0, 16, 16);
         public static Rectangle axe1 = new Rectangle(817, 17, 16, 16);
         public static Rectangle axe2 = new Rectangle(800, 17, 16, 16);
         public static Rectangle axe3 = new Rectangle(868, 0, 16, 16);

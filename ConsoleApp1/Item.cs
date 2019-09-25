@@ -18,9 +18,10 @@ namespace bel_D20
         public int[] die = new int[2] { 0, 0 };
         public int add = 0;
         public FX fx = new Holy();
+        public int amount = 1;
         void Use()
         {
-
+            amount--;
         }
 
     }
@@ -75,21 +76,37 @@ namespace bel_D20
 
     class ThrowKnife : Item
     {
-        public ThrowKnife()
+        public ThrowKnife(int many)
         {
+            amount = many;
             name = "Throwing Dagger";
             icon = new I_Ranged(2, Color.RAYWHITE);
-            cost = 50;
+            cost = 1;
             party = false;
             die = new int[2] { 1, 4 };
             add = 0;
             fx = new Pierce();
         }
     }
+    class Javelin : Item
+    {
+        public Javelin(int many)
+        {
+            amount = many;
+            name = "Javelin";
+            icon = new I_Ranged_2(6, Color.RAYWHITE);
+            cost = 2;
+            party = false;
+            die = new int[2] { 1, 6 };
+            add = 0;
+            fx = new Pierce();
+        }
+    }
     class Bomb : Item
     {
-        public Bomb()
+        public Bomb(int many)
         {
+            amount = many;
             name = "Bomb";
             icon = new I_Ranged_2(1, Color.RAYWHITE);
             cost = 150;
@@ -126,6 +143,63 @@ namespace bel_D20
             dmgType = (int)DamageType.Piercing;
         }
     }
+    class Staff : Weapon
+    {
+        public Staff()
+        {
+            name = "Quarterstaff";
+            flavor = "A wooden staff made for combat.\n1d4 blunt damage.";
+            cost = 1;
+            icon = new I_Rod(2, Color.RAYWHITE);
+            spr = Sprites.mace1;
+            die = new int[2] { 1, 6 };
+            hitFX = new Blunt();
+            dmgType = (int)DamageType.Blunt;
+        }
+    }
+    class Mace : Weapon
+    {
+        public Mace()
+        {
+            name = "Mace";
+            flavor = "A simple tool of destruction.\n1d6 blunt damage.";
+            cost = 5;
+            icon = new I_Rod(0, Color.RAYWHITE);
+            spr = Sprites.mace1;
+            die = new int[2] { 1, 6 };
+            hitFX = new Blunt();
+            dmgType = (int)DamageType.Blunt;
+        }
+    }
+    class Handaxe : Weapon
+    {
+        public Handaxe()
+        {
+            name = "Handaxe";
+            flavor = "A survival tool fashioned into a weapon.\n1d6 slashing damage.";
+            cost = 5;
+            icon = new I_Axe(0, Color.RAYWHITE);
+            spr = Sprites.axe1;
+            die = new int[2] { 1, 6 };
+            hitFX = new Slash();
+            dmgType = (int)DamageType.Slashing;
+        }
+    }
+    class Spear : Weapon
+    {
+        public Spear()
+        {
+            name = "Spear";
+            flavor = "A long-range tool of warfare";
+            cost = 1;
+            icon = new I_Axe(0, Color.RAYWHITE);
+            spr = Sprites.spear1;
+            die = new int[2] { 1, 6 };
+            hitFX = new Pierce();
+            dmgType = (int)DamageType.Piercing;
+        }
+    }
+    //martial
     class Shortsword : Weapon
     {
         public Shortsword()
@@ -169,48 +243,7 @@ namespace bel_D20
             twoHand = true;
         }
     }
-    class Staff : Weapon
-    {
-        public Staff()
-        {
-            name = "Quarterstaff";
-            flavor = "A wooden staff made for combat.\n1d4 blunt damage.";
-            cost = 1;
-            icon = new I_Rod(2, Color.RAYWHITE);
-            spr = Sprites.mace1;
-            die = new int[2] { 1, 6 };
-            hitFX = new Blunt();
-            dmgType = (int)DamageType.Blunt;
-        }
-    }
-    class Mace : Weapon
-    {
-        public Mace()
-        {
-            name = "Mace";
-            flavor = "A simple tool of destruction.\n1d6 blunt damage.";
-            cost = 5;
-            icon = new I_Rod(0,Color.RAYWHITE);
-            spr = Sprites.mace1;
-            die = new int[2] { 1, 6 };
-            hitFX = new Blunt();
-            dmgType = (int)DamageType.Blunt;
-        }
-    }
-    class Handaxe : Weapon
-    {
-        public Handaxe()
-        {
-            name = "Handaxe";
-            flavor = "A survival tool fashioned into a weapon.\n1d6 slashing damage.";
-            cost = 5;
-            icon = new I_Axe(0, Color.RAYWHITE);
-            spr = Sprites.axe1;
-            die = new int[2] { 1, 6 };
-            hitFX = new Slash();
-            dmgType = (int)DamageType.Slashing;
-        }
-    }
+    
     class Battleaxe : Weapon
     {
         public Battleaxe()
@@ -238,6 +271,34 @@ namespace bel_D20
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
             twoHand = true;
+        }
+    }
+    class Maul : Weapon
+    {
+        public Maul()
+        {
+            name = "Maul";
+            flavor = "A thinking man's hammer-axe.\n2d6 blunt damage.";
+            cost = 10;
+            icon = new I_Rod(0, Color.RAYWHITE);
+            spr = Sprites.mace1;
+            die = new int[2] { 2, 6 };
+            hitFX = new Blunt();
+            dmgType = (int)DamageType.Blunt;
+        }
+    }
+    class Flail : Weapon
+    {
+        public Flail()
+        {
+            name = "Flail";
+            flavor = "A more skillful counterpart to the mace,\nrequiring great strength and greater control\n1d8 blunt damage.";
+            cost = 10;
+            icon = new I_Rod(0, Color.RAYWHITE);
+            spr = Sprites.flail1;
+            die = new int[2] { 1, 8 };
+            hitFX = new Blunt();
+            dmgType = (int)DamageType.Blunt;
         }
     }
     class Shortbow : Weapon

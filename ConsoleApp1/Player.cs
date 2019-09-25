@@ -31,6 +31,7 @@ namespace bel_D20
         public int wepLevel = 0;
         public int level = 0;
         public Weapon weapon;
+        public Weapon offHand;
         public List<Skill> splList = new List<Skill>();
         public void StatInit()
         {
@@ -290,83 +291,14 @@ namespace bel_D20
         public Rectangle bottom;
         public Rectangle shoe;
         public Rectangle shield;
-        public List<Rectangle> wepf;// = new List<Rectangle>();
         public Weapon initWeapon;
         //score
         public int baseHP;
-        public int wepDie;
         public int hitDie;
         public int armor;
         public int armorType;
         public int[] scores = new int[6];
-        public bool ranged = false;
-        public FX hitFX;
         public List<Skill> skillz;
-    }
-    class Barbarian : Class
-    {
-        public Barbarian()
-        {
-            top = Sprites.topBrb;
-            bottom = Sprites.pants1;
-            shoe = Sprites.shoe2;
-            wepf = Sprites.axe;
-            baseHP = 12;
-            wepDie = Dice.d12(1);
-            scores = new int[6] { 15, 12, 14, 8, 13, 10 };
-            hitFX = new Blunt();
-            initWeapon = new Greataxe();
-            skillz = new List<Skill>()
-            {
-
-            };
-        }
-    }
-    class Cleric : Class
-    {
-        public Cleric()
-        {
-            hat = Sprites.hatClr;
-            top = Sprites.topPal;
-            bottom = Sprites.pants1;
-            shoe = Sprites.shoe3;
-            shield = Sprites.shield1;
-            wepf = Sprites.mace;
-            baseHP = 8;
-            wepDie = Dice.d6(1);
-            hitDie = Dice.d8(1);
-            armor = 13;
-            armorType = 1;
-            scores = new int[6] { 12, 10, 13, 8, 15, 14 };
-            hitFX = new Blunt();
-            initWeapon = new Mace();
-            skillz = new List<Skill>()
-            {
-                new Healing(),
-            };
-        }
-    }
-    class Rogue : Class
-    {
-        public Rogue()
-        {
-            top = Sprites.topRog;
-            bottom = Sprites.pants1;
-            shoe = Sprites.shoe1;
-            wepf = Sprites.knife;
-            baseHP = 8;
-            wepDie = Dice.d8(1);
-            hitDie = Dice.d8(1);
-            armor = 11;
-            armorType = 0;
-            scores = new int[6] { 14, 15, 8, 12, 10, 13 };
-            hitFX = new Pierce();
-            initWeapon = new Shortsword();
-            skillz = new List<Skill>()
-            {
-                new Sneak(),
-            };
-        }
     }
     class Fighter : Class
     {
@@ -376,14 +308,11 @@ namespace bel_D20
             top = Sprites.topWar;
             bottom = Sprites.pants4;
             shoe = Sprites.shoe1;
-            wepf = Sprites.sword;
             baseHP = 10;
-            wepDie = Dice.d10(1);
             hitDie = Dice.d10(1);
             armor = 16;
             armorType = 2;
             scores = new int[6] { 15, 14, 13, 8, 10, 12 };
-            hitFX = new Slash();
             initWeapon = new Longsword();
             skillz = new List<Skill>()
             {
@@ -399,17 +328,88 @@ namespace bel_D20
             top = Sprites.topWiz;
             bottom = new Rectangle(52, 34, 16, 16);
             //shoe = new Rectangle(69, 0, 16, 16);
-            wepf = Sprites.staff;
             baseHP = 6;
-            wepDie = Dice.d4(1);
             hitDie = Dice.d6(1);
             scores = new int[6] { 8, 12, 10, 15, 14, 13 };
-            hitFX = new Blunt();
             initWeapon = new Dagger();
             skillz = new List<Skill>()
             {
                 new MagMissile(),
                 new AcidArrow(),
+            };
+        }
+    }
+    class Cleric : Class
+    {
+        public Cleric()
+        {
+            hat = Sprites.hatClr;
+            top = Sprites.topPal;
+            bottom = Sprites.pants1;
+            shoe = Sprites.shoe3;
+            shield = Sprites.shield1;
+            baseHP = 8;
+            hitDie = Dice.d8(1);
+            armor = 13;
+            armorType = 1;
+            scores = new int[6] { 12, 10, 13, 8, 15, 14 };
+            initWeapon = new Mace();
+            skillz = new List<Skill>()
+            {
+                new Healing(),
+            };
+        }
+    }
+    class Rogue : Class
+    {
+        public Rogue()
+        {
+            top = Sprites.topRog;
+            bottom = Sprites.pants1;
+            shoe = Sprites.shoe1;
+            baseHP = 8;
+            hitDie = Dice.d8(1);
+            armor = 11;
+            armorType = 0;
+            scores = new int[6] { 14, 15, 8, 12, 10, 13 };
+            initWeapon = new Shortsword();
+            skillz = new List<Skill>()
+            {
+                new Sneak(),
+            };
+        }
+    }
+    
+    class Barbarian : Class
+    {
+        public Barbarian()
+        {
+            top = Sprites.topBrb;
+            bottom = Sprites.pants1;
+            shoe = Sprites.shoe2;
+            baseHP = 12;
+            scores = new int[6] { 15, 12, 14, 8, 13, 10 };
+            initWeapon = new Greataxe();
+            skillz = new List<Skill>()
+            {
+
+            };
+        }
+    }
+    class Ranger : Class
+    {
+        public Ranger()
+        {
+            top = Sprites.topRng;
+            bottom = Sprites.pants2;
+            shoe = Sprites.shoe1;
+            baseHP = 12;
+            hitDie = Dice.d10(1);
+            scores = new int[6] { 15, 12, 14, 8, 13, 10 };
+            initWeapon = new Longbow();
+            skillz = new List<Skill>()
+            {
+
             };
         }
     }
