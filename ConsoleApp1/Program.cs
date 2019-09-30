@@ -820,6 +820,7 @@ namespace bel_D20
                 rl.BeginDrawing();
 
                 rl.ClearBackground(Color.DARKGRAY);
+                Sprites.Tile(new Vector2(17, 45), new Vector2(midWidth, midHeight));
                 if (gameOver)
                 {
                     closeButton.Draw(new Vector2(midWidth, screenHeight - 64));

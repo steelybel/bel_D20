@@ -140,7 +140,13 @@
     <None Update="Resources\FX\swing03.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\Sprites\16x16_Jerom_CC-BY-SA-3.0.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Update="Resources\Sprites\fantasy-tileset.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="Resources\Sprites\ProjectUtumno_full.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Update="Resources\Sprites\roguelikeChar_transparent.png">

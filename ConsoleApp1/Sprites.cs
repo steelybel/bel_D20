@@ -9,42 +9,69 @@ namespace bel_D20
     class Sprites
     {
         public static Texture2D tiles = rl.LoadTexture("Resources/Sprites/fantasy-tileset.png");
+        public static Texture2D uTiles = rl.LoadTexture("Resources/Sprites/ProjectUtumno_full.png");
+        public static void Tile(int x, int y, Vector2 pos)
+        {
+            Rectangle tile = new Rectangle(x * 32, y * 32, 32, 32);
+            rl.DrawTextureRec(uTiles, tile, pos, Color.WHITE);
+        }
+        public static void Tile(Vector2 xy, Vector2 pos)
+        {
+            Vector2 posR = new Vector2(pos.x - 16, pos.y - 16);
+            Rectangle tile = new Rectangle(xy.x * 32, xy.y * 32, 32, 32);
+            rl.DrawTextureRec(uTiles, tile, posR, Color.WHITE);
+        }
+        public static void Tile(Vector2 xy, Vector2 pos, Color col)
+        {
+            Vector2 posR = new Vector2(pos.x - 16, pos.y - 16);
+            Rectangle tile = new Rectangle(xy.x * 32, xy.y * 32, 32, 32);
+            rl.DrawTextureRec(uTiles, tile, posR, col);
+        }
         //PLAYER
-        public static Rectangle skin1 = new Rectangle(0, 0, 16, 16);
-        public static Rectangle skin1f = new Rectangle(17, 0, 16, 16);
-        public static Rectangle skin2 = new Rectangle(0, 17, 16, 16);
-        public static Rectangle skin2f = new Rectangle(17, 17, 16, 16);
-        public static Rectangle skin3 = new Rectangle(0, 34, 16, 16);
-        public static Rectangle skin3f = new Rectangle(17, 34, 16, 16);
-        public static Rectangle skin4 = new Rectangle(0, 51, 16, 16);
-        public static Rectangle skin4f = new Rectangle(17, 51, 16, 16);
-        public static Rectangle topPal = new Rectangle(171, 68, 16, 16);
-        public static Rectangle topWar = new Rectangle(154, 51, 16, 16);
-        public static Rectangle topRog = new Rectangle(239, 85, 16, 16);
-        public static Rectangle topWiz = new Rectangle(120, 119, 16, 16);
-        public static Rectangle topBrb = new Rectangle(222, 119, 16, 16);
-        public static Rectangle topRng = new Rectangle(137, 68, 16, 16);
-        public static Rectangle hatClr = new Rectangle(222, 68, 16, 16);
-        public static Rectangle hatWiz = new Rectangle(528, 136, 16, 16);
-        public static Rectangle hatWar = new Rectangle(477, 102, 16, 16);
-        public static Rectangle pants1 = new Rectangle(52, 0, 16, 16);
-        public static Rectangle pants2 = new Rectangle(52, 17, 16, 16);
-        public static Rectangle pants3 = new Rectangle(52, 34, 16, 16);
-        public static Rectangle pants4 = new Rectangle(52, 51, 16, 16);
-        public static Rectangle pants5 = new Rectangle(52, 85, 16, 16);
-        public static Rectangle pants6 = new Rectangle(52, 102, 16, 16);
-        public static Rectangle pants7 = new Rectangle(52, 119, 16, 16);
-        public static Rectangle pants8 = new Rectangle(52, 136, 16, 16);
-        public static Rectangle shoe1 = new Rectangle(69, 0, 16, 16);
-        public static Rectangle shoe2 = new Rectangle(69, 17, 16, 16);
-        public static Rectangle shoe3 = new Rectangle(69, 34, 16, 16);
-        public static Rectangle shoe4 = new Rectangle(69, 51, 16, 16);
-        public static Rectangle shoe5 = new Rectangle(69, 85, 16, 16);
-        public static Rectangle shoe6 = new Rectangle(69, 102, 16, 16);
-        public static Rectangle shoe7 = new Rectangle(69, 119, 16, 16);
-        public static Rectangle shoe8 = new Rectangle(69, 136, 16, 16);
-        public static Rectangle shield1 = new Rectangle(613, 51, 16, 16);
-        public static Rectangle shield2 = new Rectangle(647, 34, 16, 16);
+        public static Color skinTan = new Color(219,192,160,255);
+        public static Color skinDark = new Color(112,67,41,255);
+        public static Vector2 humanM = new Vector2(9,80);
+        public static Vector2 humanF = new Vector2(8,80);
+        public static Vector2 elfM = new Vector2(61, 79);
+        public static Vector2 elfF = new Vector2(60, 79);
+        public static Vector2 dwarfM = new Vector2(59, 79);
+        public static Vector2 dwarfF = new Vector2(58, 79);
+        public static Vector2 dwarfL = new Vector2(23, 94);
+        public static Vector2 hobbitM = new Vector2(7, 80);
+        public static Vector2 hobbitF = new Vector2(6, 80);
+        public static Vector2 h_short = new Vector2(34, 85);
+        public static Vector2 h_long1 = new Vector2(11, 85);
+        public static Vector2 h_long2 = new Vector2(15, 85);
+        public static Vector2 h_pony1 = new Vector2(8, 85);
+        public static Vector2 h_pony2 = new Vector2(7, 85);
+
+        public static Vector2 topWar    = new Vector2(19, 82);
+        public static Vector2 botWar    = new Vector2(30, 93);
+        public static Vector2 shoeWar   = new Vector2(59, 83);
+        public static Vector2 topWiz    = new Vector2(8, 83);
+        public static Vector2 topWiz_   = new Vector2(16, 82);
+        public static Vector2 botWiz    = new Vector2(32, 93);
+        public static Vector2 botWiz_   = new Vector2(57, 93);
+        public static Vector2 shoeWiz   = new Vector2(57, 93);
+        public static Vector2 capeWiz   = new Vector2(13, 84);
+        public static Vector2 topClr    = new Vector2(19, 81);
+        public static Vector2 botClr    = new Vector2(32, 93);
+        public static Vector2 shoeClr   = new Vector2(32, 93);
+        public static Vector2 topRog    = new Vector2(30,83);
+        public static Vector2 botRog    = new Vector2(47, 93);
+        public static Vector2 shoeRog   = new Vector2(59, 83);
+        public static Vector2 topBarb   = new Vector2(4,82);
+        public static Vector2 botBarb   = new Vector2(45, 93);
+        public static Vector2 shoeBarb  = new Vector2(53, 83);
+
+        public static Vector2 swrd1     = new Vector2(16,89);
+        public static Vector2 swrd2     = new Vector2(8,87);
+        public static Vector2 dagg1     = new Vector2(8,88);
+        public static Vector2 ax1       = new Vector2(16, 87);
+        public static Vector2 mace      = new Vector2(61, 88);
+        public static Vector2 buckler   = new Vector2(39, 85);
+        public static Vector2 clrShld   = new Vector2(51, 85);
+
         public static Rectangle sword1 = new Rectangle(732, 102, 16, 16);
         public static Rectangle sword2 = new Rectangle(749, 102, 16, 16);
         public static Rectangle sword3 = new Rectangle(766, 102, 16, 16);
@@ -75,13 +102,10 @@ namespace bel_D20
         public static Rectangle bow2 = new Rectangle(885, 17, 16, 16);
         public static Rectangle bow3 = new Rectangle(902, 17, 16, 16);
         public static Rectangle bow4 = new Rectangle(902, 68, 16, 16);
-        public static List<Rectangle> knife = new List<Rectangle> { knife1, knife2, knife3, knife4 };
-        public static List<Rectangle> sword = new List<Rectangle> { sword1, sword2, sword3, sword4 };
-        public static List<Rectangle> mace = new List<Rectangle> { mace1, mace2, mace3, mace4 };
-        public static List<Rectangle> bow = new List<Rectangle> { bow1, bow2, bow3, bow4 };
-        public static List<Rectangle> axe = new List<Rectangle> { axe1, axe2, axe3, axe4 };
-        public static List<Rectangle> staff = new List<Rectangle> { staff1, staff2, staff3, staff4 };
         //ICONS ======
+        public static Vector2 i_knife_ = new Vector2(17, 45);
+        public static Vector2 i_shortsword = new Vector2(18, 45);
+        public static Vector2 i_longsword = new Vector2(18, 45);
         public static Rectangle i_sword = new Rectangle(0, 224, 32, 32);
         public static Rectangle i_knife = new Rectangle(64, 288, 16, 16);
         public static Rectangle i_book = new Rectangle(128, 192, 32, 32);

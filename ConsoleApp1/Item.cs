@@ -122,6 +122,7 @@ namespace bel_D20
         public int cost = 0;
         public Icon icon = new Icon();
         public Rectangle spr = new Rectangle();
+        public Vector2 spr_ = Sprites.ax1;
         public FX hitFX;
         public int[] die = new int[2];
         public int dmgType;
@@ -138,6 +139,7 @@ namespace bel_D20
             cost = 2;
             icon = new I_Dagger(Color.RAYWHITE);
             spr = Sprites.knife2;
+            spr_ = Sprites.dagg1;
             die = new int[2] { 1, 4 };
             hitFX = new Pierce();
             dmgType = (int)DamageType.Piercing;
@@ -166,6 +168,7 @@ namespace bel_D20
             cost = 5;
             icon = new I_Rod(0, Color.RAYWHITE);
             spr = Sprites.mace1;
+            spr_ = Sprites.mace;
             die = new int[2] { 1, 6 };
             hitFX = new Blunt();
             dmgType = (int)DamageType.Blunt;
@@ -209,6 +212,7 @@ namespace bel_D20
             cost = 10;
             icon = new I_Sword(0,Color.RAYWHITE);
             spr = Sprites.sword2;
+            spr_ = Sprites.swrd1;
             die = new int[2] { 1, 6 };
             hitFX = new Pierce();
             dmgType = (int)DamageType.Piercing;
@@ -223,6 +227,7 @@ namespace bel_D20
             cost = 15;
             icon = new I_Sword(2,Color.RAYWHITE);
             spr = Sprites.sword2;
+            spr_ = Sprites.swrd2;
             die = new int[2] { 1, 8 };
             hitFX = new Slash();
             dmgType = (int)DamageType.Slashing;
