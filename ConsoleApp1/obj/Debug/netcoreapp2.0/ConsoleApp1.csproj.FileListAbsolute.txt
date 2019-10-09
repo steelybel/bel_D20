@@ -204,3 +204,5 @@ C:\Users\Bel\source\repos\bel_D20-master\ConsoleApp1\obj\Debug\netcoreapp2.0\Con
 C:\Users\Bel\source\repos\bel_D20-master\ConsoleApp1\obj\Debug\netcoreapp2.0\ConsoleApp1.pdb
 C:\Users\Bel\source\repos\bel_D20-master\ConsoleApp1\bin\Debug\netcoreapp2.0\Resources\Sprites\16x16_Jerom_CC-BY-SA-3.0.png
 C:\Users\Bel\source\repos\bel_D20-master\ConsoleApp1\bin\Debug\netcoreapp2.0\Resources\Sprites\ProjectUtumno_full.png
+C:\Users\s199011\source\repos\bel_D20\ConsoleApp1\bin\Debug\netcoreapp2.0\Resources\Sprites\16x16_Jerom_CC-BY-SA-3.0.png
+C:\Users\s199011\source\repos\bel_D20\ConsoleApp1\bin\Debug\netcoreapp2.0\Resources\Sprites\ProjectUtumno_full.png

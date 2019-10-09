@@ -308,7 +308,7 @@ namespace bel_D20
                     break;
                 case 1:
                     skinC = Sprites.skinTan;
-                    hairC = Color.ORANGE;
+                    hairC = Color.MAROON;
                     break;
                 case 2:
                     skinC = Sprites.skinDark;
@@ -333,7 +333,7 @@ namespace bel_D20
                     break;
                 case 1:
                     skinC = Sprites.skinTan;
-                    hairC = Color.ORANGE;
+                    hairC = Color.MAROON;
                     break;
                 case 2:
                     skinC = Sprites.skinDark;
@@ -474,6 +474,9 @@ namespace bel_D20
     {
         public Rogue()
         {
+            top = Sprites.topRog;
+            bottom = Sprites.botRog;
+            shoe = Sprites.shoeRog;
             baseHP = 8;
             hitDie = Dice.d8(1);
             armor = 11;

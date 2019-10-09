@@ -1,0 +1,40 @@
+Goblin approaches!
+Goblin approaches!
+Kobold approaches!
+Create your party.
+Kobold approaches!
+Goblin approaches!
+Kobold approaches!
+Who will Audhild target?
+Choose 0 more target.
+Audhild attacks! Kobold takes 11 damage.
+Kobold is slain.
+Which enemy will Beluwyn target?
+Beluwyn attempts to attack Goblin, but fails.
+Goblin attacks! Merric takes 8 damage.
+Merric has fallen in battle.
+Which enemy will Jeremiah target?
+Jeremiah attacks! Kobold takes 6 damage.
+Kobold attacks! Jeremiah takes 5 damage.
+Who will Beluwyn target?
+Audhild heals Merric, recovering 4 health.
+Goblin attacks! Jeremiah takes 8 damage.
+Jeremiah has fallen in battle.
+Who will Jeremiah target?
+Beluwyn heals Jeremiah, recovering 10 health.
+Kobold attacks! Audhild takes 5 damage.
+Who will Merric target?
+Choose 0 more target.
+Merric attacks! Goblin takes 6 damage.
+Goblin attacks! Merric takes 8 damage.
+Merric has fallen in battle.
+Which enemy will Audhild target?
+Audhild attempts to attack Kobold, but fails.
+Kobold attacks! Beluwyn takes 5 damage.
+Which enemy will Beluwyn target?
+Beluwyn attempts to attack Goblin, but fails.
+Goblin attacks! Audhild takes 8 damage.
+Audhild has fallen in battle.
+Which enemy will Beluwyn target?
+Beluwyn attempts to attack Goblin, but fails.
+Kobold attempts to attack Beluwyn, but fails.
